@@ -1,9 +1,11 @@
 package producer
 
 import (
+	"log"
 	"sync"
 	"time"
 
+	"github.com/ozonmp/bss-company-api/internal/app/repo"
 	"github.com/ozonmp/bss-company-api/internal/app/sender"
 	"github.com/ozonmp/bss-company-api/internal/model"
 
@@ -19,8 +21,10 @@ type producer struct {
 	n       uint64
 	timeout time.Duration
 
-	sender sender.EventSender
-	events <-chan model.SubdomainEvent
+	sender  sender.EventSender
+	updater repo.EventRepo
+	cleaner repo.EventRepo
+	events  <-chan model.CompanyEvent
 
 	workerPool *workerpool.WorkerPool
 
@@ -32,7 +36,9 @@ type producer struct {
 func NewKafkaProducer(
 	n uint64,
 	sender sender.EventSender,
-	events <-chan model.SubdomainEvent,
+	updater repo.EventRepo,
+	cleaner repo.EventRepo,
+	events <-chan model.CompanyEvent,
 	workerPool *workerpool.WorkerPool,
 ) Producer {
 
@@ -42,6 +48,8 @@ func NewKafkaProducer(
 	return &producer{
 		n:          n,
 		sender:     sender,
+		updater:    updater,
+		cleaner:    cleaner,
 		events:     events,
 		workerPool: workerPool,
 		wg:         wg,
@@ -59,11 +67,20 @@ func (p *producer) Start() {
 				case event := <-p.events:
 					if err := p.sender.Send(&event); err != nil {
 						p.workerPool.Submit(func() {
-							// ...
+							// error in sending to Kafka, unlock event in DB
+							log.Printf("Unable send to Kafka: %v", err)
+							batch := []uint64{event.ID}
+							if err := p.cleaner.Unlock(batch); err != nil {
+								log.Printf("Unable to unlock event in db: %v", err)
+							}
 						})
 					} else {
 						p.workerPool.Submit(func() {
-							// ...
+							// event was sended to Kafka, update DB
+							batch := []uint64{event.ID}
+							if err := p.updater.Update(batch); err != nil {
+								log.Printf("Unable to update db: %v", err)
+							}
 						})
 					}
 				case <-p.done:
