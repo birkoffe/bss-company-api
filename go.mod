@@ -1,4 +1,4 @@
-module github.com/ozonmp/omp-demo-api
+module github.com/ozonmp/bss-company-api
 
 go 1.16
 
