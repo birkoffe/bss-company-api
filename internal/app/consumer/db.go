@@ -1,6 +1,7 @@
 package consumer
 
 import (
+	"log"
 	"sync"
 	"time"
 
@@ -65,10 +66,12 @@ func (c *consumer) Start() {
 			for {
 				select {
 				case <-ticker.C:
+					log.Printf("Try batch")
 					events, err := c.repo.Lock(c.batchSize)
 					if err != nil {
 						continue
 					}
+					log.Printf("Events (%d): %v", len(events), events)
 					for _, event := range events {
 						c.events <- event
 					}

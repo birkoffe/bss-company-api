@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 type Company struct {
 	ID      uint64
 	Name    string
@@ -24,4 +26,8 @@ type CompanyEvent struct {
 	Type   EventType
 	Status EventStatus
 	Entity *Company
+}
+
+func (c *Company) String() string {
+	return fmt.Sprintf("{ ID: %v, Name: %v, Address: %v }", c.ID, c.Name, c.Address)
 }
