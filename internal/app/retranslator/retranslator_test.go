@@ -1,6 +1,7 @@
 package retranslator
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -50,23 +51,26 @@ func TestPipeline(t *testing.T) {
 		Sender:         sender,
 	}
 
-	companies := []model.CompanyEvent{
-		{
-			ID:     1,
+	count := 1
+	companies := make([]model.CompanyEvent, count)
+
+	for i := 0; i < count; i++ {
+		companies[i] = model.CompanyEvent{
+			ID:     uint64(i),
 			Type:   model.Created,
 			Status: model.Processed,
 			Entity: &model.Company{
-				ID:      1,
-				Name:    "Company 1",
-				Address: "unknown",
+				ID:      uint64(1),
+				Name:    fmt.Sprintf("Company_%d", i),
+				Address: fmt.Sprintf("Unknown_%d", i),
 			},
-		},
+		}
 	}
 
 	gomock.InOrder(
-		repo.EXPECT().Lock(uint64(5)).Return(companies, nil).AnyTimes(),
-		sender.EXPECT().Send(&companies[0]).Return(nil).AnyTimes(),
-		repo.EXPECT().Update([]uint64{companies[0].ID}).Return(nil).AnyTimes(),
+		repo.EXPECT().Lock(uint64(10)).Return(nil, nil).MinTimes(1),
+		// sender.EXPECT().Send(&companies[0]).Return(nil).AnyTimes(),
+		// repo.EXPECT().Update([]uint64{companies[0].ID}).Return(nil).AnyTimes(),
 	)
 
 	retranslator := NewRetranslator(cfg)
