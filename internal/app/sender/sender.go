@@ -1,6 +1,7 @@
 package sender
 
 import (
+	"log"
 	"sync"
 
 	"github.com/ozonmp/bss-company-api/internal/model"
@@ -14,6 +15,7 @@ type companyArchive struct {
 var AC companyArchive
 
 func (ac *companyArchive) Send(company *model.CompanyEvent) error {
+	log.Printf("Recieved %v", company)
 	ac.mu.Lock()
 	defer ac.mu.Unlock()
 

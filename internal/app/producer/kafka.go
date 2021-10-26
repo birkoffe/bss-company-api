@@ -62,6 +62,7 @@ func (p *producer) Start() {
 				select {
 				case event := <-p.events:
 					log.Printf("Sending %v", event)
+					// log.Panicf("Sender %v", p.sender)
 					if err := p.sender.Send(&event); err != nil {
 						p.workerPool.Submit(func() {
 							// error in sending to Kafka, unlock event in DB

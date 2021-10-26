@@ -9,6 +9,7 @@ import (
 
 	"github.com/ozonmp/bss-company-api/internal/app/repo"
 	"github.com/ozonmp/bss-company-api/internal/app/retranslator"
+	"github.com/ozonmp/bss-company-api/internal/app/sender"
 	"github.com/ozonmp/bss-company-api/internal/model"
 )
 
@@ -24,6 +25,7 @@ func main() {
 		WorkerCount:    2,
 		ConsumeTimeout: 100 * time.Millisecond,
 		Repo:           &repo.AC,
+		Sender:         &sender.AC,
 	}
 
 	retranslator := retranslator.NewRetranslator(cfg)
