@@ -45,7 +45,7 @@ func TestPipeline(t *testing.T) {
 		ConsumerCount:  2,
 		ConsumeSize:    1,
 		ConsumeTimeout: 100 * time.Microsecond,
-		ProducerCount:  2,
+		ProducerCount:  3,
 		WorkerCount:    2,
 		Repo:           repo,
 		Sender:         sender,
@@ -69,7 +69,7 @@ func TestPipeline(t *testing.T) {
 
 	gomock.InOrder(
 		repo.EXPECT().Lock(gomock.Any()).Return(companies, nil).Times(1),
-		// sender.EXPECT().Send(gomock.Any()).Return(nil).Times(2),
+		sender.EXPECT().Send(gomock.Any()).Return(nil).Times(3),
 		// repo.EXPECT().Update(gomock.Any()).Return(nil).Times(0),
 	)
 

@@ -1,8 +1,6 @@
 package sender
 
 import (
-	"errors"
-	"math/rand"
 	"sync"
 
 	"github.com/ozonmp/bss-company-api/internal/model"
@@ -24,14 +22,16 @@ func (ac *companyArchive) Send(company *model.CompanyEvent) error {
 		ac.company = make([]model.CompanyEvent, 10)
 	}
 
-	r := rand.Intn(10)
+	// r := rand.Intn(10)
 	// log.Printf("r: %+v", r)
 
-	if r != 1 {
-		ac.company = append(ac.company, *company)
-	} else {
-		return errors.New("Oppps! Tray again!")
-	}
+	// if r != 1 {
+	// 	ac.company = append(ac.company, *company)
+	// } else {
+	// 	return errors.New("Oppps! Tray again!")
+	// }
+
+	ac.company = append(ac.company, *company)
 
 	return nil
 }
