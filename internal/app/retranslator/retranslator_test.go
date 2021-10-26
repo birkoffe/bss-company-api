@@ -43,15 +43,15 @@ func TestPipeline(t *testing.T) {
 	cfg := Config{
 		ChannelSize:    512,
 		ConsumerCount:  2,
-		ConsumeSize:    10,
-		ConsumeTimeout: 10 * time.Second,
+		ConsumeSize:    1,
+		ConsumeTimeout: 100 * time.Microsecond,
 		ProducerCount:  2,
 		WorkerCount:    2,
 		Repo:           repo,
 		Sender:         sender,
 	}
 
-	count := 1
+	count := 10
 	companies := make([]model.CompanyEvent, count)
 
 	for i := 0; i < count; i++ {
@@ -68,12 +68,16 @@ func TestPipeline(t *testing.T) {
 	}
 
 	gomock.InOrder(
-		repo.EXPECT().Lock(uint64(10)).Return(nil, nil).MinTimes(1),
-		// sender.EXPECT().Send(&companies[0]).Return(nil).AnyTimes(),
-		// repo.EXPECT().Update([]uint64{companies[0].ID}).Return(nil).AnyTimes(),
+		repo.EXPECT().Lock(gomock.Any()).Return(companies[:1], nil).Times(1),
+		sender.EXPECT().Send(gomock.Any()).Return(nil).Times(3),
+		repo.EXPECT().Update(gomock.Any()).Return(nil).Times(0),
 	)
 
 	retranslator := NewRetranslator(cfg)
 	retranslator.Start()
+
+	// !!!
+	time.Sleep(5 * time.Second)
+
 	retranslator.Close()
 }
