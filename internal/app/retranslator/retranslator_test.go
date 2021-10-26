@@ -66,7 +66,7 @@ func TestPipeline(t *testing.T) {
 	gomock.InOrder(
 		repo.EXPECT().Lock(uint64(5)).Return(companies, nil).AnyTimes(),
 		sender.EXPECT().Send(&companies[0]).Return(nil).AnyTimes(),
-		repo.EXPECT().Remove([]uint64{companies[0].ID}).Return(nil).AnyTimes(),
+		repo.EXPECT().Update([]uint64{companies[0].ID}).Return(nil).AnyTimes(),
 	)
 
 	retranslator := NewRetranslator(cfg)

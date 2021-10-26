@@ -30,8 +30,8 @@ func (ac *companyArchive) Lock(n uint64) ([]model.CompanyEvent, error) {
 
 	for i, comp := range ac.company {
 		if comp.Type == model.Created && comp.Status == model.Deferred {
-			comp.Status = model.Processed
-			ac.company[i].Status = model.Processed
+			comp.Status = model.Captured
+			ac.company[i].Status = model.Captured
 
 			ret = append(ret, comp)
 		}
@@ -45,13 +45,32 @@ func (ac *companyArchive) Lock(n uint64) ([]model.CompanyEvent, error) {
 }
 
 func (ac *companyArchive) Unlock(eventIDs []uint64) error {
+	ac.mu.Lock()
+	defer ac.mu.Unlock()
+
+	for _, event_id := range eventIDs {
+		ac.company[event_id].Status = model.Deferred
+	}
+
 	return nil
 }
 
 func (ac *companyArchive) Remove(eventIDs []uint64) error {
-	return nil
+	ac.mu.Lock()
+	defer ac.mu.Unlock()
+
+	for _, event_id := range eventIDs {
+		ac.company = append(ac.company[0:event_id], ac.company[event_id+1:]...)
+	}
 }
 
 func (ac *companyArchive) Update(eventIDs []uint64) error {
+	ac.mu.Lock()
+	defer ac.mu.Unlock()
+
+	for _, event_id := range eventIDs {
+		ac.company[event_id].Status = model.Processed
+	}
+
 	return nil
 }

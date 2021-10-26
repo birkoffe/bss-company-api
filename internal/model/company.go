@@ -18,6 +18,7 @@ const (
 	Removed
 
 	Deferred EventStatus = iota
+	Captured
 	Processed
 )
 

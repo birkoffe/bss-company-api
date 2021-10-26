@@ -75,6 +75,7 @@ func (p *producer) Start() {
 					} else {
 						p.workerPool.Submit(func() {
 							// event was sended to Kafka, update DB
+							log.Printf("Update event %v", event)
 							batch := []uint64{event.ID}
 							if err := p.repo.Update(batch); err != nil {
 								log.Printf("Unable to update db: %v", err)
