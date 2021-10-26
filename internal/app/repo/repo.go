@@ -62,6 +62,7 @@ func (ac *companyArchive) Remove(eventIDs []uint64) error {
 	for _, event_id := range eventIDs {
 		ac.company = append(ac.company[0:event_id], ac.company[event_id+1:]...)
 	}
+	return nil
 }
 
 func (ac *companyArchive) Update(eventIDs []uint64) error {
