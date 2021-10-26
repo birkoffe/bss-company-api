@@ -31,7 +31,7 @@ func main() {
 	retranslator := retranslator.NewRetranslator(cfg)
 	retranslator.Start()
 
-	count := 2
+	count := 100
 	companies := make([]model.CompanyEvent, count)
 
 	for i := 0; i < count; i++ {
@@ -49,7 +49,7 @@ func main() {
 
 	repo.AC.Add(companies)
 
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, syscall.SIGPIPE)
 
 	<-sigs
 }
