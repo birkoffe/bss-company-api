@@ -2,6 +2,7 @@ package retranslator
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 
@@ -42,9 +43,9 @@ func TestPipeline(t *testing.T) {
 
 	cfg := Config{
 		ChannelSize:    512,
-		ConsumerCount:  2,
+		ConsumerCount:  1,
 		ConsumeSize:    1,
-		ConsumeTimeout: 100 * time.Microsecond,
+		ConsumeTimeout: 100 * time.Millisecond,
 		ProducerCount:  3,
 		WorkerCount:    2,
 		Repo:           repo,
@@ -52,10 +53,12 @@ func TestPipeline(t *testing.T) {
 	}
 
 	count := 10
-	companies := make([]model.CompanyEvent, count)
+	companies := make([]model.CompanyEvent, 0, count)
+
+	var wg = sync.WaitGroup{} // !!!
 
 	for i := 0; i < count; i++ {
-		companies[i] = model.CompanyEvent{
+		companies = append(companies, model.CompanyEvent{
 			ID:     uint64(i),
 			Type:   model.Created,
 			Status: model.Processed,
@@ -64,20 +67,22 @@ func TestPipeline(t *testing.T) {
 				Name:    fmt.Sprintf("Company_%d", i),
 				Address: fmt.Sprintf("Unknown_%d", i),
 			},
-		}
+		})
 	}
 
-	gomock.InOrder(
-		repo.EXPECT().Lock(gomock.Any()).Return(companies, nil).Times(1),
-		sender.EXPECT().Send(gomock.Any()).Return(nil).Times(3),
-		// repo.EXPECT().Update(gomock.Any()).Return(nil).Times(0),
-	)
+	repo.EXPECT().Lock(uint64(1)).Return(companies, nil).Times(1)
+	for _, event := range companies {
+		_ = event
+		wg.Add(1)
+		repo.EXPECT().Update(gomock.Any()).Return(nil).Times(1)
+		sender.EXPECT().Send(gomock.Any()).Do(func(_ *model.CompanyEvent) {
+			wg.Done()
+		}).Times(1)
+	}
 
 	retranslator := NewRetranslator(cfg)
 	retranslator.Start()
+	defer retranslator.Close()
 
-	// !!!
-	time.Sleep(5 * time.Second)
-
-	retranslator.Close()
+	wg.Wait() // here is waiting that all wg done before closing retranslator
 }
