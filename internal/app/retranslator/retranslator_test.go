@@ -107,7 +107,7 @@ func TestSendError(t *testing.T) {
 	count := 10
 	companies := make([]model.CompanyEvent, 0, count)
 
-	var wg2 = sync.WaitGroup{} // !!!
+	var wg = sync.WaitGroup{} // !!!
 
 	for i := 0; i < count; i++ {
 		companies = append(companies, model.CompanyEvent{
@@ -126,20 +126,20 @@ func TestSendError(t *testing.T) {
 	for idx, event := range companies {
 		_ = event
 		if idx == 0 {
-			wg2.Add(1)
+			wg.Add(1)
 			repo.EXPECT().Update(gomock.Any()).Return(nil).Times(0)
 			repo.EXPECT().Unlock(gomock.Any()).Return(nil).Times(1)
 			sender.EXPECT().Send(gomock.Any()).DoAndReturn(
 				func(_ *model.CompanyEvent) error {
-					defer wg2.Done()
+					defer wg.Done()
 					return errors.New("Ooops")
 				},
 			)
 		} else {
-			wg2.Add(1)
+			wg.Add(1)
 			repo.EXPECT().Update(gomock.Any()).Return(nil).Times(1)
 			sender.EXPECT().Send(gomock.Any()).Do(func(_ *model.CompanyEvent) {
-				wg2.Done()
+				wg.Done()
 			}).Times(1)
 		}
 	}
@@ -148,5 +148,5 @@ func TestSendError(t *testing.T) {
 	retranslator.Start()
 	defer retranslator.Close()
 
-	wg2.Wait() // here is waiting that all wg done before closing retranslator
+	wg.Wait() // here is waiting that all wg done before closing retranslator
 }
