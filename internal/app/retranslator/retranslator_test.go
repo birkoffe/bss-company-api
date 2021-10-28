@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
+	"github.com/ozonmp/bss-company-api/internal/app/repo"
 	"github.com/ozonmp/bss-company-api/internal/mocks"
 	"github.com/ozonmp/bss-company-api/internal/model"
 )
@@ -143,6 +144,64 @@ func TestSendError(t *testing.T) {
 			}).Times(1)
 		}
 	}
+
+	retranslator := NewRetranslator(cfg)
+	retranslator.Start()
+	defer retranslator.Close()
+
+	wg.Wait() // here is waiting that all wg done before closing retranslator
+}
+
+func TestOnlyCreated(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	// repo := mocks.NewMockEventRepo(ctrl)
+	sender := mocks.NewMockEventSender(ctrl)
+
+	cfg := Config{
+		ChannelSize:    512,
+		ConsumerCount:  1,
+		ConsumeSize:    1,
+		ConsumeTimeout: 100 * time.Millisecond,
+		ProducerCount:  3,
+		WorkerCount:    2,
+		Repo:           &repo.AC,
+		Sender:         sender,
+	}
+
+	count := 3
+	companies := make([]model.CompanyEvent, 0, count)
+
+	var wg = sync.WaitGroup{} // !!!
+
+	companies = append(companies,
+		model.CompanyEvent{
+			ID:     1,
+			Type:   model.Removed,
+			Status: model.Deferred,
+			Entity: &model.Company{},
+		},
+		model.CompanyEvent{
+			ID:     2,
+			Type:   model.Created,
+			Status: model.Deferred,
+			Entity: &model.Company{},
+		},
+		model.CompanyEvent{
+			ID:     3,
+			Type:   model.Updated,
+			Status: model.Deferred,
+			Entity: &model.Company{},
+		},
+	)
+
+	repo.AC.Add(companies)
+
+	wg.Add(1)
+	sender.EXPECT().Send(gomock.Any()).Do(
+		func(_ *model.CompanyEvent) {
+			wg.Done()
+		},
+	).Times(1)
 
 	retranslator := NewRetranslator(cfg)
 	retranslator.Start()
