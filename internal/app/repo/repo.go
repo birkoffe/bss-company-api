@@ -75,3 +75,10 @@ func (ac *companyArchive) Update(eventIDs []uint64) error {
 
 	return nil
 }
+
+func (ac *companyArchive) Get(eventID uint64) model.CompanyEvent {
+	ac.mu.Lock()
+	defer ac.mu.Unlock()
+
+	return ac.company[eventID]
+}

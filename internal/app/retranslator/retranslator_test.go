@@ -11,6 +11,7 @@ import (
 	"github.com/ozonmp/bss-company-api/internal/app/repo"
 	"github.com/ozonmp/bss-company-api/internal/mocks"
 	"github.com/ozonmp/bss-company-api/internal/model"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestStart(t *testing.T) {
@@ -175,6 +176,12 @@ func TestOnlyCreated(t *testing.T) {
 
 	companies = append(companies,
 		model.CompanyEvent{
+			ID:     0,
+			Type:   model.Created,
+			Status: model.Deferred,
+			Entity: &model.Company{},
+		},
+		model.CompanyEvent{
 			ID:     1,
 			Type:   model.Removed,
 			Status: model.Deferred,
@@ -182,13 +189,7 @@ func TestOnlyCreated(t *testing.T) {
 		},
 		model.CompanyEvent{
 			ID:     2,
-			Type:   model.Created,
-			Status: model.Deferred,
-			Entity: &model.Company{},
-		},
-		model.CompanyEvent{
-			ID:     3,
-			Type:   model.Updated,
+			Type:   model.Removed,
 			Status: model.Deferred,
 			Entity: &model.Company{},
 		},
@@ -208,4 +209,8 @@ func TestOnlyCreated(t *testing.T) {
 	defer retranslator.Close()
 
 	wg.Wait() // here is waiting that all wg done before closing retranslator
+
+	assert.Equal(t, repo.AC.Get(0).Status, model.Processed, "Should be preccesed")
+	assert.Equal(t, repo.AC.Get(1).Status, model.Deferred, "Should be not preccesed")
+	assert.Equal(t, repo.AC.Get(2).Status, model.Deferred, "Should be not preccesed")
 }
