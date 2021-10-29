@@ -20,8 +20,8 @@ func TestStart(t *testing.T) {
 	repo := mocks.NewMockEventRepo(ctrl)
 	sender := mocks.NewMockEventSender(ctrl)
 
-	repo.EXPECT().Lock(gomock.Any()).AnyTimes()
-	sender.EXPECT().Send(gomock.Any()).AnyTimes()
+	repo.EXPECT().Lock(gomock.AssignableToTypeOf(uint64(0))).AnyTimes()
+	sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).AnyTimes()
 
 	cfg := Config{
 		ChannelSize:    512,
@@ -77,8 +77,8 @@ func TestPipeline(t *testing.T) {
 	for _, event := range companies {
 		_ = event
 		wg.Add(1)
-		repo.EXPECT().Update(gomock.Any()).Return(nil).Times(1)
-		sender.EXPECT().Send(gomock.Any()).Do(func(_ *model.CompanyEvent) {
+		repo.EXPECT().Update(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(1)
+		sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(func(_ *model.CompanyEvent) {
 			wg.Done()
 		}).Times(1)
 	}
@@ -129,9 +129,9 @@ func TestSendError(t *testing.T) {
 		_ = event
 		if idx == 0 {
 			wg.Add(1)
-			repo.EXPECT().Update(gomock.Any()).Return(nil).Times(0)
-			repo.EXPECT().Unlock(gomock.Any()).Return(nil).Times(1)
-			sender.EXPECT().Send(gomock.Any()).DoAndReturn(
+			repo.EXPECT().Update(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(0)
+			repo.EXPECT().Unlock(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(1)
+			sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).DoAndReturn(
 				func(_ *model.CompanyEvent) error {
 					defer wg.Done()
 					return errors.New("Ooops")
@@ -139,8 +139,8 @@ func TestSendError(t *testing.T) {
 			)
 		} else {
 			wg.Add(1)
-			repo.EXPECT().Update(gomock.Any()).Return(nil).Times(1)
-			sender.EXPECT().Send(gomock.Any()).Do(func(_ *model.CompanyEvent) {
+			repo.EXPECT().Update(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(1)
+			sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(func(_ *model.CompanyEvent) {
 				wg.Done()
 			}).Times(1)
 		}
@@ -160,7 +160,7 @@ func TestOnlyCreated(t *testing.T) {
 
 	cfg := Config{
 		ChannelSize:    512,
-		ConsumerCount:  1,
+		ConsumerCount:  2,
 		ConsumeSize:    1,
 		ConsumeTimeout: 100 * time.Millisecond,
 		ProducerCount:  3,
@@ -198,7 +198,7 @@ func TestOnlyCreated(t *testing.T) {
 	repo.AC.Add(companies)
 
 	wg.Add(1)
-	sender.EXPECT().Send(gomock.Any()).Do(
+	sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(
 		func(_ *model.CompanyEvent) {
 			wg.Done()
 		},
@@ -210,7 +210,9 @@ func TestOnlyCreated(t *testing.T) {
 
 	wg.Wait() // here is waiting that all wg done before closing retranslator
 
-	assert.Equal(t, repo.AC.Get(0).Status, model.Processed, "Should be preccesed")
-	assert.Equal(t, repo.AC.Get(1).Status, model.Deferred, "Should be not preccesed")
-	assert.Equal(t, repo.AC.Get(2).Status, model.Deferred, "Should be not preccesed")
+	time.Sleep(time.Second)
+
+	assert.Equal(t, model.Processed, repo.AC.Get(0).Status, "Should be preccesed")
+	assert.Equal(t, model.Deferred, repo.AC.Get(1).Status, "Should be not preccesed")
+	assert.Equal(t, model.Deferred, repo.AC.Get(2).Status, "Should be not preccesed")
 }
