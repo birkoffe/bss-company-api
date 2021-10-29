@@ -78,7 +78,9 @@ func TestPipeline(t *testing.T) {
 		_ = event
 		wg.Add(1)
 		repo.EXPECT().Update([]uint64{event.ID}).Return(nil).Times(1)
-		sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(func(ce *model.CompanyEvent) {
+		c := event
+		c.Status = model.Processed
+		sender.EXPECT().Send(&c).Do(func(_ *model.CompanyEvent) {
 			wg.Done()
 		}).Times(1)
 	}
@@ -131,7 +133,7 @@ func TestSendError(t *testing.T) {
 		_ = event
 		if idx == 0 {
 			wg.Add(1)
-			repo.EXPECT().Update(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(0)
+			repo.EXPECT().Update([]uint64{event.ID}).Return(nil).Times(0)
 			repo.EXPECT().Unlock(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(1)
 			sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).DoAndReturn(
 				func(_ *model.CompanyEvent) error {
@@ -141,7 +143,7 @@ func TestSendError(t *testing.T) {
 			)
 		} else {
 			wg.Add(1)
-			repo.EXPECT().Update(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(1)
+			repo.EXPECT().Update([]uint64{event.ID}).Return(nil).Times(1)
 			sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(func(_ *model.CompanyEvent) {
 				wg.Done()
 			}).Times(1)
