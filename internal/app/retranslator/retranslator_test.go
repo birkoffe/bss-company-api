@@ -20,8 +20,8 @@ func TestStart(t *testing.T) {
 	repo := mocks.NewMockEventRepo(ctrl)
 	sender := mocks.NewMockEventSender(ctrl)
 
-	repo.EXPECT().Lock(gomock.AssignableToTypeOf(uint64(0))).AnyTimes()
-	sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).AnyTimes()
+	repo.EXPECT().Lock(uint64(1)).AnyTimes()
+	sender.EXPECT().Send(&model.CompanyEvent{}).AnyTimes()
 
 	cfg := Config{
 		ChannelSize:    512,
@@ -135,7 +135,9 @@ func TestSendError(t *testing.T) {
 			wg.Add(1)
 			repo.EXPECT().Update([]uint64{event.ID}).Return(nil).Times(0)
 			repo.EXPECT().Unlock([]uint64{event.ID}).Return(nil).Times(1)
-			sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).DoAndReturn(
+			c := event
+			c.Status = model.Processed
+			sender.EXPECT().Send(&c).DoAndReturn(
 				func(_ *model.CompanyEvent) error {
 					defer wg.Done()
 					return errors.New("Ooops")
@@ -144,7 +146,9 @@ func TestSendError(t *testing.T) {
 		} else {
 			wg.Add(1)
 			repo.EXPECT().Update([]uint64{event.ID}).Return(nil).Times(1)
-			sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(func(_ *model.CompanyEvent) {
+			c := event
+			c.Status = model.Processed
+			sender.EXPECT().Send(&c).Do(func(_ *model.CompanyEvent) {
 				wg.Done()
 			}).Times(1)
 		}
