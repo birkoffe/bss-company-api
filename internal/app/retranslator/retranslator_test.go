@@ -66,7 +66,7 @@ func TestPipeline(t *testing.T) {
 			Type:   model.Created,
 			Status: model.Processed,
 			Entity: &model.Company{
-				ID:      uint64(1),
+				ID:      uint64(i),
 				Name:    fmt.Sprintf("Company_%d", i),
 				Address: fmt.Sprintf("Unknown_%d", i),
 			},
@@ -77,8 +77,8 @@ func TestPipeline(t *testing.T) {
 	for _, event := range companies {
 		_ = event
 		wg.Add(1)
-		repo.EXPECT().Update(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(1)
-		sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(func(_ *model.CompanyEvent) {
+		repo.EXPECT().Update([]uint64{event.ID}).Return(nil).Times(1)
+		sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(func(ce *model.CompanyEvent) {
 			wg.Done()
 		}).Times(1)
 	}
@@ -88,6 +88,8 @@ func TestPipeline(t *testing.T) {
 	defer retranslator.Close()
 
 	wg.Wait() // here is waiting that all wg done before closing retranslator
+
+	// time.Sleep(time.Second)
 }
 
 func TestSendError(t *testing.T) {
@@ -117,7 +119,7 @@ func TestSendError(t *testing.T) {
 			Type:   model.Created,
 			Status: model.Processed,
 			Entity: &model.Company{
-				ID:      uint64(1),
+				ID:      uint64(i),
 				Name:    fmt.Sprintf("Company_%d", i),
 				Address: fmt.Sprintf("Unknown_%d", i),
 			},
@@ -198,7 +200,9 @@ func TestOnlyCreated(t *testing.T) {
 	repo.AC.Add(companies)
 
 	wg.Add(1)
-	sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).Do(
+	c := companies[0]
+	c.Status = model.Captured
+	sender.EXPECT().Send(&c).Do(
 		func(_ *model.CompanyEvent) {
 			wg.Done()
 		},
