@@ -134,7 +134,7 @@ func TestSendError(t *testing.T) {
 		if idx == 0 {
 			wg.Add(1)
 			repo.EXPECT().Update([]uint64{event.ID}).Return(nil).Times(0)
-			repo.EXPECT().Unlock(gomock.AssignableToTypeOf([]uint64{})).Return(nil).Times(1)
+			repo.EXPECT().Unlock([]uint64{event.ID}).Return(nil).Times(1)
 			sender.EXPECT().Send(gomock.AssignableToTypeOf(&model.CompanyEvent{})).DoAndReturn(
 				func(_ *model.CompanyEvent) error {
 					defer wg.Done()
