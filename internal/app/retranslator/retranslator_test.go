@@ -90,8 +90,6 @@ func TestPipeline(t *testing.T) {
 	defer retranslator.Close()
 
 	wg.Wait() // here is waiting that all wg done before closing retranslator
-
-	// time.Sleep(time.Second)
 }
 
 func TestSendError(t *testing.T) {
