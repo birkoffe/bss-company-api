@@ -15,7 +15,7 @@ type Consumer interface {
 
 type consumer struct {
 	n      uint64
-	events chan<- model.SubdomainEvent
+	events chan<- model.CompanyEvent
 
 	repo repo.EventRepo
 
@@ -28,7 +28,7 @@ type consumer struct {
 
 type Config struct {
 	n         uint64
-	events    chan<- model.SubdomainEvent
+	events    chan<- model.CompanyEvent
 	repo      repo.EventRepo
 	batchSize uint64
 	timeout   time.Duration
@@ -39,7 +39,7 @@ func NewDbConsumer(
 	batchSize uint64,
 	consumeTimeout time.Duration,
 	repo repo.EventRepo,
-	events chan<- model.SubdomainEvent) Consumer {
+	events chan<- model.CompanyEvent) Consumer {
 
 	wg := &sync.WaitGroup{}
 	done := make(chan bool)
@@ -65,10 +65,12 @@ func (c *consumer) Start() {
 			for {
 				select {
 				case <-ticker.C:
+					// log.Printf("Try batch")
 					events, err := c.repo.Lock(c.batchSize)
 					if err != nil {
 						continue
 					}
+					// log.Printf("Events (%d): %v", len(events), events)
 					for _, event := range events {
 						c.events <- event
 					}

@@ -35,7 +35,7 @@ func (m *MockEventRepo) EXPECT() *MockEventRepoMockRecorder {
 }
 
 // Add mocks base method.
-func (m *MockEventRepo) Add(arg0 []model.SubdomainEvent) error {
+func (m *MockEventRepo) Add(arg0 []model.CompanyEvent) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Add", arg0)
 	ret0, _ := ret[0].(error)
@@ -49,10 +49,10 @@ func (mr *MockEventRepoMockRecorder) Add(arg0 interface{}) *gomock.Call {
 }
 
 // Lock mocks base method.
-func (m *MockEventRepo) Lock(arg0 uint64) ([]model.SubdomainEvent, error) {
+func (m *MockEventRepo) Lock(arg0 uint64) ([]model.CompanyEvent, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Lock", arg0)
-	ret0, _ := ret[0].([]model.SubdomainEvent)
+	ret0, _ := ret[0].([]model.CompanyEvent)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -89,4 +89,18 @@ func (m *MockEventRepo) Unlock(arg0 []uint64) error {
 func (mr *MockEventRepoMockRecorder) Unlock(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unlock", reflect.TypeOf((*MockEventRepo)(nil).Unlock), arg0)
+}
+
+// Unlock mocks base method.
+func (m *MockEventRepo) Update(arg0 []uint64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Update", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Unlock indicates an expected call of Unlock.
+func (mr *MockEventRepoMockRecorder) Update(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockEventRepo)(nil).Update), arg0)
 }

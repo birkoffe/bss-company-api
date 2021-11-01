@@ -32,14 +32,14 @@ type Config struct {
 }
 
 type retranslator struct {
-	events     chan model.SubdomainEvent
+	events     chan model.CompanyEvent
 	consumer   consumer.Consumer
 	producer   producer.Producer
 	workerPool *workerpool.WorkerPool
 }
 
 func NewRetranslator(cfg Config) Retranslator {
-	events := make(chan model.SubdomainEvent, cfg.ChannelSize)
+	events := make(chan model.CompanyEvent, cfg.ChannelSize)
 	workerPool := workerpool.New(cfg.WorkerCount)
 
 	consumer := consumer.NewDbConsumer(
@@ -51,6 +51,7 @@ func NewRetranslator(cfg Config) Retranslator {
 	producer := producer.NewKafkaProducer(
 		cfg.ProducerCount,
 		cfg.Sender,
+		cfg.Repo,
 		events,
 		workerPool)
 
