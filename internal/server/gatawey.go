@@ -42,7 +42,7 @@ func createGatewayServer(grpcAddr, gatewayAddr string) *http.Server {
 	}
 
 	mux := runtime.NewServeMux()
-	if err := pb.RegisterbsscompanyApiServiceHandler(context.Background(), mux, conn); err != nil {
+	if err := pb.RegisterBssCompanyApiServiceHandler(context.Background(), mux, conn); err != nil {
 		log.Fatal().Err(err).Msg("Failed registration handler")
 	}
 

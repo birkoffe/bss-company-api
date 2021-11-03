@@ -35,7 +35,7 @@ func NewCompanyAPI(r repo.Repo) pb.BssCompanyApiServiceServer {
 func (o *CompanyAPI) DescribecompanyV1(
 	ctx context.Context,
 	req *pb.DescribeCompanyV1Request,
-) (*pb.DescribecCompanyV1Response, error) {
+) (*pb.DescribeCompanyV1Response, error) {
 
 	if err := req.Validate(); err != nil {
 		log.Error().Err(err).Msg("DescribeCompanyV1 - invalid argument")
