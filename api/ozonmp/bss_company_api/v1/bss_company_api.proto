@@ -30,5 +30,5 @@ message DescribeCompanyV1Request {
 }
 
 message DescribeCompanyV1Response {
-  company value = 1;
+  Company value = 1;
 }

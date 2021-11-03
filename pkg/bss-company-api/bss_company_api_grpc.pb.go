@@ -14,88 +14,88 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// BsscompanyApiServiceClient is the client API for BsscompanyApiService service.
+// BssCompanyApiServiceClient is the client API for BssCompanyApiService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BsscompanyApiServiceClient interface {
+type BssCompanyApiServiceClient interface {
 	// DescribecompanyV1 - Describe a company
-	DescribecompanyV1(ctx context.Context, in *DescribecompanyV1Request, opts ...grpc.CallOption) (*DescribecompanyV1Response, error)
+	DescribeCompanyV1(ctx context.Context, in *DescribeCompanyV1Request, opts ...grpc.CallOption) (*DescribeCompanyV1Response, error)
 }
 
-type bsscompanyApiServiceClient struct {
+type bssCompanyApiServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBsscompanyApiServiceClient(cc grpc.ClientConnInterface) BsscompanyApiServiceClient {
-	return &bsscompanyApiServiceClient{cc}
+func NewBssCompanyApiServiceClient(cc grpc.ClientConnInterface) BssCompanyApiServiceClient {
+	return &bssCompanyApiServiceClient{cc}
 }
 
-func (c *bsscompanyApiServiceClient) DescribecompanyV1(ctx context.Context, in *DescribecompanyV1Request, opts ...grpc.CallOption) (*DescribecompanyV1Response, error) {
-	out := new(DescribecompanyV1Response)
-	err := c.cc.Invoke(ctx, "/ozonmp.bss_company_api.v1.bsscompanyApiService/DescribecompanyV1", in, out, opts...)
+func (c *bssCompanyApiServiceClient) DescribeCompanyV1(ctx context.Context, in *DescribeCompanyV1Request, opts ...grpc.CallOption) (*DescribeCompanyV1Response, error) {
+	out := new(DescribeCompanyV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BsscompanyApiServiceServer is the server API for BsscompanyApiService service.
-// All implementations must embed UnimplementedBsscompanyApiServiceServer
+// BssCompanyApiServiceServer is the server API for BssCompanyApiService service.
+// All implementations must embed UnimplementedBssCompanyApiServiceServer
 // for forward compatibility
-type BsscompanyApiServiceServer interface {
+type BssCompanyApiServiceServer interface {
 	// DescribecompanyV1 - Describe a company
-	DescribecompanyV1(context.Context, *DescribecompanyV1Request) (*DescribecompanyV1Response, error)
-	mustEmbedUnimplementedBsscompanyApiServiceServer()
+	DescribeCompanyV1(context.Context, *DescribeCompanyV1Request) (*DescribeCompanyV1Response, error)
+	mustEmbedUnimplementedBssCompanyApiServiceServer()
 }
 
-// UnimplementedBsscompanyApiServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedBsscompanyApiServiceServer struct {
+// UnimplementedBssCompanyApiServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedBssCompanyApiServiceServer struct {
 }
 
-func (UnimplementedBsscompanyApiServiceServer) DescribecompanyV1(context.Context, *DescribecompanyV1Request) (*DescribecompanyV1Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DescribecompanyV1 not implemented")
+func (UnimplementedBssCompanyApiServiceServer) DescribeCompanyV1(context.Context, *DescribeCompanyV1Request) (*DescribeCompanyV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeCompanyV1 not implemented")
 }
-func (UnimplementedBsscompanyApiServiceServer) mustEmbedUnimplementedBsscompanyApiServiceServer() {}
+func (UnimplementedBssCompanyApiServiceServer) mustEmbedUnimplementedBssCompanyApiServiceServer() {}
 
-// UnsafeBsscompanyApiServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BsscompanyApiServiceServer will
+// UnsafeBssCompanyApiServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BssCompanyApiServiceServer will
 // result in compilation errors.
-type UnsafeBsscompanyApiServiceServer interface {
-	mustEmbedUnimplementedBsscompanyApiServiceServer()
+type UnsafeBssCompanyApiServiceServer interface {
+	mustEmbedUnimplementedBssCompanyApiServiceServer()
 }
 
-func RegisterBsscompanyApiServiceServer(s grpc.ServiceRegistrar, srv BsscompanyApiServiceServer) {
-	s.RegisterService(&BsscompanyApiService_ServiceDesc, srv)
+func RegisterBssCompanyApiServiceServer(s grpc.ServiceRegistrar, srv BssCompanyApiServiceServer) {
+	s.RegisterService(&BssCompanyApiService_ServiceDesc, srv)
 }
 
-func _BsscompanyApiService_DescribecompanyV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DescribecompanyV1Request)
+func _BssCompanyApiService_DescribeCompanyV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeCompanyV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BsscompanyApiServiceServer).DescribecompanyV1(ctx, in)
+		return srv.(BssCompanyApiServiceServer).DescribeCompanyV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ozonmp.bss_company_api.v1.bsscompanyApiService/DescribecompanyV1",
+		FullMethod: "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BsscompanyApiServiceServer).DescribecompanyV1(ctx, req.(*DescribecompanyV1Request))
+		return srv.(BssCompanyApiServiceServer).DescribeCompanyV1(ctx, req.(*DescribeCompanyV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// BsscompanyApiService_ServiceDesc is the grpc.ServiceDesc for BsscompanyApiService service.
+// BssCompanyApiService_ServiceDesc is the grpc.ServiceDesc for BssCompanyApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var BsscompanyApiService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ozonmp.bss_company_api.v1.bsscompanyApiService",
-	HandlerType: (*BsscompanyApiServiceServer)(nil),
+var BssCompanyApiService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "ozonmp.bss_company_api.v1.BssCompanyApiService",
+	HandlerType: (*BssCompanyApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "DescribecompanyV1",
-			Handler:    _BsscompanyApiService_DescribecompanyV1_Handler,
+			MethodName: "DescribeCompanyV1",
+			Handler:    _BssCompanyApiService_DescribeCompanyV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

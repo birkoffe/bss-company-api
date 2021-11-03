@@ -31,8 +31,8 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_BsscompanyApiService_DescribecompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, client BsscompanyApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DescribecompanyV1Request
+func request_BssCompanyApiService_DescribeCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, client BssCompanyApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DescribeCompanyV1Request
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -52,13 +52,13 @@ func request_BsscompanyApiService_DescribecompanyV1_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "company_id", err)
 	}
 
-	msg, err := client.DescribecompanyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DescribeCompanyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_BsscompanyApiService_DescribecompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, server BsscompanyApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DescribecompanyV1Request
+func local_request_BssCompanyApiService_DescribeCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, server BssCompanyApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DescribeCompanyV1Request
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -78,29 +78,29 @@ func local_request_BsscompanyApiService_DescribecompanyV1_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "company_id", err)
 	}
 
-	msg, err := server.DescribecompanyV1(ctx, &protoReq)
+	msg, err := server.DescribeCompanyV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-// RegisterBsscompanyApiServiceHandlerServer registers the http handlers for service BsscompanyApiService to "mux".
-// UnaryRPC     :call BsscompanyApiServiceServer directly.
+// RegisterBssCompanyApiServiceHandlerServer registers the http handlers for service BssCompanyApiService to "mux".
+// UnaryRPC     :call BssCompanyApiServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterBsscompanyApiServiceHandlerFromEndpoint instead.
-func RegisterBsscompanyApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server BsscompanyApiServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterBssCompanyApiServiceHandlerFromEndpoint instead.
+func RegisterBssCompanyApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server BssCompanyApiServiceServer) error {
 
-	mux.Handle("GET", pattern_BsscompanyApiService_DescribecompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_BssCompanyApiService_DescribeCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BsscompanyApiService/DescribecompanyV1", runtime.WithHTTPPathPattern("/v1/companys/{company_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/{company_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_BsscompanyApiService_DescribecompanyV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_BssCompanyApiService_DescribeCompanyV1_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -108,16 +108,16 @@ func RegisterBsscompanyApiServiceHandlerServer(ctx context.Context, mux *runtime
 			return
 		}
 
-		forward_BsscompanyApiService_DescribecompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_BssCompanyApiService_DescribeCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterBsscompanyApiServiceHandlerFromEndpoint is same as RegisterBsscompanyApiServiceHandler but
+// RegisterBssCompanyApiServiceHandlerFromEndpoint is same as RegisterBssCompanyApiServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterBsscompanyApiServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterBssCompanyApiServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -137,39 +137,39 @@ func RegisterBsscompanyApiServiceHandlerFromEndpoint(ctx context.Context, mux *r
 		}()
 	}()
 
-	return RegisterBsscompanyApiServiceHandler(ctx, mux, conn)
+	return RegisterBssCompanyApiServiceHandler(ctx, mux, conn)
 }
 
-// RegisterBsscompanyApiServiceHandler registers the http handlers for service BsscompanyApiService to "mux".
+// RegisterBssCompanyApiServiceHandler registers the http handlers for service BssCompanyApiService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterBsscompanyApiServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterBsscompanyApiServiceHandlerClient(ctx, mux, NewBsscompanyApiServiceClient(conn))
+func RegisterBssCompanyApiServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterBssCompanyApiServiceHandlerClient(ctx, mux, NewBssCompanyApiServiceClient(conn))
 }
 
-// RegisterBsscompanyApiServiceHandlerClient registers the http handlers for service BsscompanyApiService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "BsscompanyApiServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "BsscompanyApiServiceClient"
+// RegisterBssCompanyApiServiceHandlerClient registers the http handlers for service BssCompanyApiService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "BssCompanyApiServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "BssCompanyApiServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "BsscompanyApiServiceClient" to call the correct interceptors.
-func RegisterBsscompanyApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client BsscompanyApiServiceClient) error {
+// "BssCompanyApiServiceClient" to call the correct interceptors.
+func RegisterBssCompanyApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client BssCompanyApiServiceClient) error {
 
-	mux.Handle("GET", pattern_BsscompanyApiService_DescribecompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_BssCompanyApiService_DescribeCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BsscompanyApiService/DescribecompanyV1", runtime.WithHTTPPathPattern("/v1/companys/{company_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/{company_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_BsscompanyApiService_DescribecompanyV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_BssCompanyApiService_DescribeCompanyV1_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_BsscompanyApiService_DescribecompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_BssCompanyApiService_DescribeCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -177,9 +177,9 @@ func RegisterBsscompanyApiServiceHandlerClient(ctx context.Context, mux *runtime
 }
 
 var (
-	pattern_BsscompanyApiService_DescribecompanyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "companys", "company_id"}, ""))
+	pattern_BssCompanyApiService_DescribeCompanyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "companys", "company_id"}, ""))
 )
 
 var (
-	forward_BsscompanyApiService_DescribecompanyV1_0 = runtime.ForwardResponseMessage
+	forward_BssCompanyApiService_DescribeCompanyV1_0 = runtime.ForwardResponseMessage
 )

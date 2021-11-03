@@ -113,16 +113,16 @@ var _ interface {
 	ErrorName() string
 } = CompanyValidationError{}
 
-// Validate checks the field values on DescribecompanyV1Request with the rules
+// Validate checks the field values on DescribeCompanyV1Request with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *DescribecompanyV1Request) Validate() error {
+func (m *DescribeCompanyV1Request) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if m.GetCompanyId() <= 0 {
-		return DescribecompanyV1RequestValidationError{
+		return DescribeCompanyV1RequestValidationError{
 			field:  "CompanyId",
 			reason: "value must be greater than 0",
 		}
@@ -131,9 +131,9 @@ func (m *DescribecompanyV1Request) Validate() error {
 	return nil
 }
 
-// DescribecompanyV1RequestValidationError is the validation error returned by
-// DescribecompanyV1Request.Validate if the designated constraints aren't met.
-type DescribecompanyV1RequestValidationError struct {
+// DescribeCompanyV1RequestValidationError is the validation error returned by
+// DescribeCompanyV1Request.Validate if the designated constraints aren't met.
+type DescribeCompanyV1RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -141,24 +141,24 @@ type DescribecompanyV1RequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribecompanyV1RequestValidationError) Field() string { return e.field }
+func (e DescribeCompanyV1RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribecompanyV1RequestValidationError) Reason() string { return e.reason }
+func (e DescribeCompanyV1RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribecompanyV1RequestValidationError) Cause() error { return e.cause }
+func (e DescribeCompanyV1RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribecompanyV1RequestValidationError) Key() bool { return e.key }
+func (e DescribeCompanyV1RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribecompanyV1RequestValidationError) ErrorName() string {
-	return "DescribecompanyV1RequestValidationError"
+func (e DescribeCompanyV1RequestValidationError) ErrorName() string {
+	return "DescribeCompanyV1RequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e DescribecompanyV1RequestValidationError) Error() string {
+func (e DescribeCompanyV1RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -170,14 +170,14 @@ func (e DescribecompanyV1RequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribecompanyV1Request.%s: %s%s",
+		"invalid %sDescribeCompanyV1Request.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribecompanyV1RequestValidationError{}
+var _ error = DescribeCompanyV1RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -185,19 +185,19 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribecompanyV1RequestValidationError{}
+} = DescribeCompanyV1RequestValidationError{}
 
-// Validate checks the field values on DescribecompanyV1Response with the rules
+// Validate checks the field values on DescribeCompanyV1Response with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *DescribecompanyV1Response) Validate() error {
+func (m *DescribeCompanyV1Response) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DescribecompanyV1ResponseValidationError{
+			return DescribeCompanyV1ResponseValidationError{
 				field:  "Value",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -208,9 +208,9 @@ func (m *DescribecompanyV1Response) Validate() error {
 	return nil
 }
 
-// DescribecompanyV1ResponseValidationError is the validation error returned by
-// DescribecompanyV1Response.Validate if the designated constraints aren't met.
-type DescribecompanyV1ResponseValidationError struct {
+// DescribeCompanyV1ResponseValidationError is the validation error returned by
+// DescribeCompanyV1Response.Validate if the designated constraints aren't met.
+type DescribeCompanyV1ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -218,24 +218,24 @@ type DescribecompanyV1ResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribecompanyV1ResponseValidationError) Field() string { return e.field }
+func (e DescribeCompanyV1ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribecompanyV1ResponseValidationError) Reason() string { return e.reason }
+func (e DescribeCompanyV1ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribecompanyV1ResponseValidationError) Cause() error { return e.cause }
+func (e DescribeCompanyV1ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribecompanyV1ResponseValidationError) Key() bool { return e.key }
+func (e DescribeCompanyV1ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribecompanyV1ResponseValidationError) ErrorName() string {
-	return "DescribecompanyV1ResponseValidationError"
+func (e DescribeCompanyV1ResponseValidationError) ErrorName() string {
+	return "DescribeCompanyV1ResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e DescribecompanyV1ResponseValidationError) Error() string {
+func (e DescribeCompanyV1ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -247,14 +247,14 @@ func (e DescribecompanyV1ResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribecompanyV1Response.%s: %s%s",
+		"invalid %sDescribeCompanyV1Response.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribecompanyV1ResponseValidationError{}
+var _ error = DescribeCompanyV1ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -262,4 +262,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribecompanyV1ResponseValidationError{}
+} = DescribeCompanyV1ResponseValidationError{}
