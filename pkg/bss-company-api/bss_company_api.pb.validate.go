@@ -113,6 +113,164 @@ var _ interface {
 	ErrorName() string
 } = CompanyValidationError{}
 
+// Validate checks the field values on CreateCompanyV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateCompanyV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetCompanyName()) < 20 {
+		return CreateCompanyV1RequestValidationError{
+			field:  "CompanyName",
+			reason: "value length must be at least 20 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetAddressName()) < 100 {
+		return CreateCompanyV1RequestValidationError{
+			field:  "AddressName",
+			reason: "value length must be at least 100 runes",
+		}
+	}
+
+	return nil
+}
+
+// CreateCompanyV1RequestValidationError is the validation error returned by
+// CreateCompanyV1Request.Validate if the designated constraints aren't met.
+type CreateCompanyV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateCompanyV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateCompanyV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateCompanyV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateCompanyV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateCompanyV1RequestValidationError) ErrorName() string {
+	return "CreateCompanyV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateCompanyV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateCompanyV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateCompanyV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateCompanyV1RequestValidationError{}
+
+// Validate checks the field values on CreateCompanyV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateCompanyV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetCompany()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateCompanyV1ResponseValidationError{
+				field:  "Company",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// CreateCompanyV1ResponseValidationError is the validation error returned by
+// CreateCompanyV1Response.Validate if the designated constraints aren't met.
+type CreateCompanyV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateCompanyV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateCompanyV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateCompanyV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateCompanyV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateCompanyV1ResponseValidationError) ErrorName() string {
+	return "CreateCompanyV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateCompanyV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateCompanyV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateCompanyV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateCompanyV1ResponseValidationError{}
+
 // Validate checks the field values on DescribeCompanyV1Request with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -263,3 +421,295 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DescribeCompanyV1ResponseValidationError{}
+
+// Validate checks the field values on ListCompanyV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListCompanyV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// ListCompanyV1RequestValidationError is the validation error returned by
+// ListCompanyV1Request.Validate if the designated constraints aren't met.
+type ListCompanyV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListCompanyV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListCompanyV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListCompanyV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListCompanyV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListCompanyV1RequestValidationError) ErrorName() string {
+	return "ListCompanyV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListCompanyV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListCompanyV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListCompanyV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListCompanyV1RequestValidationError{}
+
+// Validate checks the field values on ListCompanyV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListCompanyV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetCompany() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListCompanyV1ResponseValidationError{
+					field:  fmt.Sprintf("Company[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListCompanyV1ResponseValidationError is the validation error returned by
+// ListCompanyV1Response.Validate if the designated constraints aren't met.
+type ListCompanyV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListCompanyV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListCompanyV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListCompanyV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListCompanyV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListCompanyV1ResponseValidationError) ErrorName() string {
+	return "ListCompanyV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListCompanyV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListCompanyV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListCompanyV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListCompanyV1ResponseValidationError{}
+
+// Validate checks the field values on RemoveCompanyV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveCompanyV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetCompanyId() <= 0 {
+		return RemoveCompanyV1RequestValidationError{
+			field:  "CompanyId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	return nil
+}
+
+// RemoveCompanyV1RequestValidationError is the validation error returned by
+// RemoveCompanyV1Request.Validate if the designated constraints aren't met.
+type RemoveCompanyV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveCompanyV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveCompanyV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveCompanyV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveCompanyV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveCompanyV1RequestValidationError) ErrorName() string {
+	return "RemoveCompanyV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveCompanyV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveCompanyV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveCompanyV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveCompanyV1RequestValidationError{}
+
+// Validate checks the field values on RemoveCompanyV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveCompanyV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Result
+
+	return nil
+}
+
+// RemoveCompanyV1ResponseValidationError is the validation error returned by
+// RemoveCompanyV1Response.Validate if the designated constraints aren't met.
+type RemoveCompanyV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveCompanyV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveCompanyV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveCompanyV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveCompanyV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveCompanyV1ResponseValidationError) ErrorName() string {
+	return "RemoveCompanyV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveCompanyV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveCompanyV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveCompanyV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveCompanyV1ResponseValidationError{}

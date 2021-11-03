@@ -31,6 +31,42 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
+var (
+	filter_BssCompanyApiService_CreateCompanyV1_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
+func request_BssCompanyApiService_CreateCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, client BssCompanyApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateCompanyV1Request
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BssCompanyApiService_CreateCompanyV1_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.CreateCompanyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_BssCompanyApiService_CreateCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, server BssCompanyApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateCompanyV1Request
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BssCompanyApiService_CreateCompanyV1_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.CreateCompanyV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 func request_BssCompanyApiService_DescribeCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, client BssCompanyApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DescribeCompanyV1Request
 	var metadata runtime.ServerMetadata
@@ -83,11 +119,104 @@ func local_request_BssCompanyApiService_DescribeCompanyV1_0(ctx context.Context,
 
 }
 
+func request_BssCompanyApiService_ListCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, client BssCompanyApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListCompanyV1Request
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.ListCompanyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_BssCompanyApiService_ListCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, server BssCompanyApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListCompanyV1Request
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.ListCompanyV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_BssCompanyApiService_RemoveCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, client BssCompanyApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RemoveCompanyV1Request
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["company_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "company_id")
+	}
+
+	protoReq.CompanyId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "company_id", err)
+	}
+
+	msg, err := client.RemoveCompanyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_BssCompanyApiService_RemoveCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, server BssCompanyApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RemoveCompanyV1Request
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["company_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "company_id")
+	}
+
+	protoReq.CompanyId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "company_id", err)
+	}
+
+	msg, err := server.RemoveCompanyV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterBssCompanyApiServiceHandlerServer registers the http handlers for service BssCompanyApiService to "mux".
 // UnaryRPC     :call BssCompanyApiServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterBssCompanyApiServiceHandlerFromEndpoint instead.
 func RegisterBssCompanyApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server BssCompanyApiServiceServer) error {
+
+	mux.Handle("GET", pattern_BssCompanyApiService_CreateCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/CreateCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/create"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_BssCompanyApiService_CreateCompanyV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_BssCompanyApiService_CreateCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
 
 	mux.Handle("GET", pattern_BssCompanyApiService_DescribeCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
@@ -95,7 +224,7 @@ func RegisterBssCompanyApiServiceHandlerServer(ctx context.Context, mux *runtime
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/{company_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/describe/{company_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -109,6 +238,52 @@ func RegisterBssCompanyApiServiceHandlerServer(ctx context.Context, mux *runtime
 		}
 
 		forward_BssCompanyApiService_DescribeCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_BssCompanyApiService_ListCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/ListCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/list"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_BssCompanyApiService_ListCompanyV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_BssCompanyApiService_ListCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_BssCompanyApiService_RemoveCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/RemoveCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/remove/{company_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_BssCompanyApiService_RemoveCompanyV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_BssCompanyApiService_RemoveCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -153,11 +328,31 @@ func RegisterBssCompanyApiServiceHandler(ctx context.Context, mux *runtime.Serve
 // "BssCompanyApiServiceClient" to call the correct interceptors.
 func RegisterBssCompanyApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client BssCompanyApiServiceClient) error {
 
+	mux.Handle("GET", pattern_BssCompanyApiService_CreateCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/CreateCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/create"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_BssCompanyApiService_CreateCompanyV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_BssCompanyApiService_CreateCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_BssCompanyApiService_DescribeCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/{company_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/DescribeCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/describe/{company_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -173,13 +368,65 @@ func RegisterBssCompanyApiServiceHandlerClient(ctx context.Context, mux *runtime
 
 	})
 
+	mux.Handle("GET", pattern_BssCompanyApiService_ListCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/ListCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/list"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_BssCompanyApiService_ListCompanyV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_BssCompanyApiService_ListCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_BssCompanyApiService_RemoveCompanyV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.bss_company_api.v1.BssCompanyApiService/RemoveCompanyV1", runtime.WithHTTPPathPattern("/v1/companys/remove/{company_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_BssCompanyApiService_RemoveCompanyV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_BssCompanyApiService_RemoveCompanyV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
 var (
-	pattern_BssCompanyApiService_DescribeCompanyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "companys", "company_id"}, ""))
+	pattern_BssCompanyApiService_CreateCompanyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "companys", "create"}, ""))
+
+	pattern_BssCompanyApiService_DescribeCompanyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "companys", "describe", "company_id"}, ""))
+
+	pattern_BssCompanyApiService_ListCompanyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "companys", "list"}, ""))
+
+	pattern_BssCompanyApiService_RemoveCompanyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "companys", "remove", "company_id"}, ""))
 )
 
 var (
+	forward_BssCompanyApiService_CreateCompanyV1_0 = runtime.ForwardResponseMessage
+
 	forward_BssCompanyApiService_DescribeCompanyV1_0 = runtime.ForwardResponseMessage
+
+	forward_BssCompanyApiService_ListCompanyV1_0 = runtime.ForwardResponseMessage
+
+	forward_BssCompanyApiService_RemoveCompanyV1_0 = runtime.ForwardResponseMessage
 )
