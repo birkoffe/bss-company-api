@@ -16,34 +16,34 @@ import (
 )
 
 var (
-	totalcompanyNotFound = promauto.NewCounter(prometheus.CounterOpts{
+	totalCompanyNotFound = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "bss_company_api_company_not_found_total",
 		Help: "Total number of companys that were not found",
 	})
 )
 
-type companyAPI struct {
-	pb.UnimplementedbsscompanyApiServiceServer
+type CompanyAPI struct {
+	pb.UnimplementedBssCompanyApiServiceServer
 	repo repo.Repo
 }
 
-// NewcompanyAPI returns api of bss-company-api service
-func NewcompanyAPI(r repo.Repo) pb.bsscompanyApiServiceServer {
-	return &companyAPI{repo: r}
+// NewCompanyAPI returns api of bss-company-api service
+func NewCompanyAPI(r repo.Repo) pb.BssCompanyApiServiceServer {
+	return &CompanyAPI{repo: r}
 }
 
-func (o *companyAPI) DescribecompanyV1(
+func (o *CompanyAPI) DescribecompanyV1(
 	ctx context.Context,
-	req *pb.DescribecompanyV1Request,
-) (*pb.DescribecompanyV1Response, error) {
+	req *pb.DescribeCompanyV1Request,
+) (*pb.DescribecCompanyV1Response, error) {
 
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("DescribecompanyV1 - invalid argument")
+		log.Error().Err(err).Msg("DescribeCompanyV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	company, err := o.repo.Describecompany(ctx, req.companyId)
+	company, err := o.repo.DescribeCompany(ctx, req.companyId)
 	if err != nil {
 		log.Error().Err(err).Msg("DescribecompanyV1 -- failed")
 
@@ -52,17 +52,18 @@ func (o *companyAPI) DescribecompanyV1(
 
 	if company == nil {
 		log.Debug().Uint64("companyId", req.companyId).Msg("company not found")
-		totalcompanyNotFound.Inc()
+		totalCompanyNotFound.Inc()
 
 		return nil, status.Error(codes.NotFound, "company not found")
 	}
 
-	log.Debug().Msg("DescribecompanyV1 - success")
+	log.Debug().Msg("DescribeCompanyV1 - success")
 
 	return &pb.DescribecompanyV1Response{
-		Value: &pb.company{
-			Id:  company.ID,
-			Foo: company.Foo,
+		Value: &pb.Company{
+			Id:      company.ID,
+			Name:    company.Name,
+			Address: company.Address,
 		},
 	}, nil
 }
