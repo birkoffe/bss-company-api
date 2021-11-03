@@ -8,27 +8,27 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/ozonmp/bss-company-api/pkg/bss-company-api;bss_company_api";
 
-// bsscompanyApiService - Service for working with companys
-service bsscompanyApiService {
+// BssCompanyApiService - Service for working with companys
+service BssCompanyApiService {
   // DescribecompanyV1 - Describe a company
-  rpc DescribecompanyV1(DescribecompanyV1Request) returns (DescribecompanyV1Response) {
+  rpc DescribeCompanyV1(DescribeCompanyV1Request) returns (DescribeCompanyV1Response) {
     option (google.api.http) = {
       get: "/v1/companys/{company_id}"
     };
   }
 }
 
-message company {
+message Company {
   uint64 id  = 1;
   string name = 2;
   string address = 3;
   google.protobuf.Timestamp created = 4;
 }
 
-message DescribecompanyV1Request {
+message DescribeCompanyV1Request {
   uint64 company_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
-message DescribecompanyV1Response {
+message DescribeCompanyV1Response {
   company value = 1;
 }
