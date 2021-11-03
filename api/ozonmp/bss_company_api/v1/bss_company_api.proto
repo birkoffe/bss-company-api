@@ -10,10 +10,31 @@ option go_package = "github.com/ozonmp/bss-company-api/pkg/bss-company-api;bss_c
 
 // BssCompanyApiService - Service for working with companys
 service BssCompanyApiService {
-  // DescribecompanyV1 - Describe a company
+  // CreateCompanyV1 - Create a company
+  rpc CreateCompanyV1(CreateCompanyV1Request) returns (CreateCompanyV1Response) {
+    option (google.api.http) = {
+      get: "/v1/companys/create"
+    };
+  }
+
+  // DescribeCompanyV1 - Describe a company
   rpc DescribeCompanyV1(DescribeCompanyV1Request) returns (DescribeCompanyV1Response) {
     option (google.api.http) = {
-      get: "/v1/companys/{company_id}"
+      get: "/v1/companys/describe/{company_id}"
+    };
+  }
+
+  // ListCompanyV1 - List a company
+  rpc ListCompanyV1(ListCompanyV1Request) returns (ListCompanyV1Response) {
+    option (google.api.http) = {
+      get: "/v1/companys/list"
+    };
+  }
+
+  // RemoveCompanyV1 - Remove a company
+  rpc RemoveCompanyV1(RemoveCompanyV1Request) returns (RemoveCompanyV1Response) {
+    option (google.api.http) = {
+      get: "/v1/companys/remove/{company_id}"
     };
   }
 }
@@ -25,10 +46,34 @@ message Company {
   google.protobuf.Timestamp created = 4;
 }
 
+message CreateCompanyV1Request {
+  string company_name [(validate.rules).string.min_len = 20];
+  string address_name [(validate.rules).string.min_len = 100]; 
+}
+
+message CreateCompanyV1Response {
+  Company company 1;
+}
+
 message DescribeCompanyV1Request {
   uint64 company_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
 message DescribeCompanyV1Response {
   Company value = 1;
+}
+
+message ListCompanyV1Request {
+}
+
+message ListCompanyV1Response {
+  repeated Company company = 1
+}
+
+message RemoveCompanyV1Request {
+  uint64 company_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message RemoveCompanyV1Response {
+  bool result = 1
 }
