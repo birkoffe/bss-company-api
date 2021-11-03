@@ -42,7 +42,9 @@ func (m *Company) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Foo
+	// no validation rules for Name
+
+	// no validation rules for Address
 
 	if v, ok := interface{}(m.GetCreated()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
