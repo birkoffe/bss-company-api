@@ -54,7 +54,7 @@ func createGatewayServer(grpcAddr, gatewayAddr string) *http.Server {
 	return gatewayServer
 }
 
-var grpcGatewayTag = opentracing.Tag{Key: string(ext.Cbssonent), Value: "grpc-gateway"}
+var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
 
 func tracingWrapper(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

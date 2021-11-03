@@ -43,7 +43,7 @@ func (o *CompanyAPI) DescribecompanyV1(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	company, err := o.repo.DescribeCompany(ctx, req.companyId)
+	company, err := o.repo.DescribeCompany(ctx, req.CompanyId)
 	if err != nil {
 		log.Error().Err(err).Msg("DescribecompanyV1 -- failed")
 
@@ -51,7 +51,7 @@ func (o *CompanyAPI) DescribecompanyV1(
 	}
 
 	if company == nil {
-		log.Debug().Uint64("companyId", req.companyId).Msg("company not found")
+		log.Debug().Uint64("companyId", req.CompanyId).Msg("company not found")
 		totalCompanyNotFound.Inc()
 
 		return nil, status.Error(codes.NotFound, "company not found")
@@ -59,7 +59,7 @@ func (o *CompanyAPI) DescribecompanyV1(
 
 	log.Debug().Msg("DescribeCompanyV1 - success")
 
-	return &pb.DescribecompanyV1Response{
+	return &pb.DescribeCompanyV1Response{
 		Value: &pb.Company{
 			Id:      company.ID,
 			Name:    company.Name,
