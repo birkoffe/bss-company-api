@@ -10,59 +10,59 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/ozonmp/omp-template-api/internal/repo"
+	"github.com/ozonmp/bss-company-api/internal/repo"
 
-	pb "github.com/ozonmp/omp-template-api/pkg/omp-template-api"
+	pb "github.com/ozonmp/bss-company-api/pkg/bss-company-api"
 )
 
 var (
-	totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "omp_template_api_template_not_found_total",
-		Help: "Total number of templates that were not found",
+	totalcompanyNotFound = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "bss_company_api_company_not_found_total",
+		Help: "Total number of companys that were not found",
 	})
 )
 
-type templateAPI struct {
-	pb.UnimplementedOmpTemplateApiServiceServer
+type companyAPI struct {
+	pb.UnimplementedbsscompanyApiServiceServer
 	repo repo.Repo
 }
 
-// NewTemplateAPI returns api of omp-template-api service
-func NewTemplateAPI(r repo.Repo) pb.OmpTemplateApiServiceServer {
-	return &templateAPI{repo: r}
+// NewcompanyAPI returns api of bss-company-api service
+func NewcompanyAPI(r repo.Repo) pb.bsscompanyApiServiceServer {
+	return &companyAPI{repo: r}
 }
 
-func (o *templateAPI) DescribeTemplateV1(
+func (o *companyAPI) DescribecompanyV1(
 	ctx context.Context,
-	req *pb.DescribeTemplateV1Request,
-) (*pb.DescribeTemplateV1Response, error) {
+	req *pb.DescribecompanyV1Request,
+) (*pb.DescribecompanyV1Response, error) {
 
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 - invalid argument")
+		log.Error().Err(err).Msg("DescribecompanyV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	template, err := o.repo.DescribeTemplate(ctx, req.TemplateId)
+	company, err := o.repo.Describecompany(ctx, req.companyId)
 	if err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 -- failed")
+		log.Error().Err(err).Msg("DescribecompanyV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	if template == nil {
-		log.Debug().Uint64("templateId", req.TemplateId).Msg("template not found")
-		totalTemplateNotFound.Inc()
+	if company == nil {
+		log.Debug().Uint64("companyId", req.companyId).Msg("company not found")
+		totalcompanyNotFound.Inc()
 
-		return nil, status.Error(codes.NotFound, "template not found")
+		return nil, status.Error(codes.NotFound, "company not found")
 	}
 
-	log.Debug().Msg("DescribeTemplateV1 - success")
+	log.Debug().Msg("DescribecompanyV1 - success")
 
-	return &pb.DescribeTemplateV1Response{
-		Value: &pb.Template{
-			Id:  template.ID,
-			Foo: template.Foo,
+	return &pb.DescribecompanyV1Response{
+		Value: &pb.company{
+			Id:  company.ID,
+			Foo: company.Foo,
 		},
 	}, nil
 }

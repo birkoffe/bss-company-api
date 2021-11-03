@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package ozonmp.bss_company_api.v1;
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/ozonmp/bss-company-api/pkg/bss-company-api;bss_company_api";
+
+// bsscompanyApiService - Service for working with companys
+service bsscompanyApiService {
+  // DescribecompanyV1 - Describe a company
+  rpc DescribecompanyV1(DescribecompanyV1Request) returns (DescribecompanyV1Response) {
+    option (google.api.http) = {
+      get: "/v1/companys/{company_id}"
+    };
+  }
+}
+
+message company {
+  uint64 id  = 1;
+  uint64 foo = 2;
+  google.protobuf.Timestamp created = 3;
+}
+
+message DescribecompanyV1Request {
+  uint64 company_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message DescribecompanyV1Response {
+  company value = 1;
+}

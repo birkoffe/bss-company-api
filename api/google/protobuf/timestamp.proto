@@ -56,13 +56,13 @@ option objc_class_prefix = "GPB";
 //
 // # Examples
 //
-// Example 1: Compute Timestamp from POSIX `time()`.
+// Example 1: Cbssute Timestamp from POSIX `time()`.
 //
 //     Timestamp timestamp;
 //     timestamp.set_seconds(time(NULL));
 //     timestamp.set_nanos(0);
 //
-// Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+// Example 2: Cbssute Timestamp from POSIX `gettimeofday()`.
 //
 //     struct timeval tv;
 //     gettimeofday(&tv, NULL);
@@ -71,7 +71,7 @@ option objc_class_prefix = "GPB";
 //     timestamp.set_seconds(tv.tv_sec);
 //     timestamp.set_nanos(tv.tv_usec * 1000);
 //
-// Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+// Example 3: Cbssute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
 //
 //     FILETIME ft;
 //     GetSystemTimeAsFileTime(&ft);
@@ -83,7 +83,7 @@ option objc_class_prefix = "GPB";
 //     timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
 //     timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
 //
-// Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+// Example 4: Cbssute Timestamp from Java `System.currentTimeMillis()`.
 //
 //     long millis = System.currentTimeMillis();
 //
@@ -91,7 +91,7 @@ option objc_class_prefix = "GPB";
 //         .setNanos((int) ((millis % 1000) * 1000000)).build();
 //
 //
-// Example 5: Compute Timestamp from Java `Instant.now()`.
+// Example 5: Cbssute Timestamp from Java `Instant.now()`.
 //
 //     Instant now = Instant.now();
 //
@@ -100,7 +100,7 @@ option objc_class_prefix = "GPB";
 //             .setNanos(now.getNano()).build();
 //
 //
-// Example 6: Compute Timestamp from current time in Python.
+// Example 6: Cbssute Timestamp from current time in Python.
 //
 //     timestamp = Timestamp()
 //     timestamp.GetCurrentTime()

@@ -1,7 +1,7 @@
 // Copyright 2015 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
+// you may not use this file except in cbssliance with the License.
 // You may obtain a copy of the License at
 //
 //     http://www.apache.org/licenses/LICENSE-2.0
@@ -58,10 +58,10 @@ message Http {
 // gRPC response message is mapped to the HTTP response body. `HttpRule` is
 // typically specified as an `google.api.http` annotation on the gRPC method.
 //
-// Each mapping specifies a URL path template and an HTTP method. The path
-// template may refer to one or more fields in the gRPC request message, as long
+// Each mapping specifies a URL path company and an HTTP method. The path
+// company may refer to one or more fields in the gRPC request message, as long
 // as each field is a non-repeated field with a primitive (non-message) type.
-// The path template controls how fields of the request message are mapped to
+// The path company controls how fields of the request message are mapped to
 // the URL path.
 //
 // Example:
@@ -86,7 +86,7 @@ message Http {
 // -----|-----
 // `GET /v1/messages/123456`  | `GetMessage(name: "messages/123456")`
 //
-// Any fields in the request message which are not bound by the path template
+// Any fields in the request message which are not bound by the path company
 // automatically become HTTP query parameters if there is no HTTP request body.
 // For example:
 //
@@ -148,7 +148,7 @@ message Http {
 // "123456" message { text: "Hi!" })`
 //
 // The special name `*` can be used in the body mapping to define that
-// every field not bound by the path template should be mapped to the
+// every field not bound by the path company should be mapped to the
 // request body.  This enables the following alternative definition of
 // the update method:
 //
@@ -209,7 +209,7 @@ message Http {
 //
 // 1. Leaf request fields (recursive expansion nested messages in the request
 //    message) are classified into three categories:
-//    - Fields referred by the path template. They are passed via the URL path.
+//    - Fields referred by the path company. They are passed via the URL path.
 //    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They are passed via the HTTP
 //      request body.
 //    - All other fields are passed via the URL query parameters, and the
@@ -221,9 +221,9 @@ message Http {
 //  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP request body, all
 //     fields are passed via URL path and URL query parameters.
 //
-// ### Path template syntax
+// ### Path company syntax
 //
-//     Template = "/" Segments [ Verb ] ;
+//     company = "/" Segments [ Verb ] ;
 //     Segments = Segment { "/" Segment } ;
 //     Segment  = "*" | "**" | LITERAL | Variable ;
 //     Variable = "{" FieldPath [ "=" Segments ] "}" ;
@@ -235,8 +235,8 @@ message Http {
 // except the `Verb`.
 //
 // The syntax `Variable` matches part of the URL path as specified by its
-// template. A variable template must not contain other variables. If a variable
-// matches a single path segment, its template may be omitted, e.g. `{var}`
+// company. A variable company must not contain other variables. If a variable
+// matches a single path segment, its company may be omitted, e.g. `{var}`
 // is equivalent to `{var=*}`.
 //
 // The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`
@@ -305,7 +305,7 @@ message Http {
 // character. For consistency, all path variables must share the same behavior.
 //
 // Repeated message fields must not be mapped to URL query parameters, because
-// no client library can support such complicated mapping.
+// no client library can support such cbsslicated mapping.
 //
 // If an API needs to use a JSON array for request or response body, it can map
 // the request or response body to a repeated field. However, some gRPC
