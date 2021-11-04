@@ -249,6 +249,13 @@ services:
     volumes:
       - ./dist/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
 
+  pypiserver:
+    image: pypiserver/pypiserver:latest
+    ports:
+      - 8900:8080
+    volumes:
+      - ./pypiserver/packages:/data/packages
+
 volumes:
   pgdata:
     driver: local
