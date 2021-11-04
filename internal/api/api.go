@@ -32,7 +32,7 @@ func NewCompanyAPI(r repo.Repo) pb.BssCompanyApiServiceServer {
 	return &CompanyAPI{repo: r}
 }
 
-func (o *CompanyAPI) DescribecompanyV1(
+func (o *CompanyAPI) DescribeCompanyV1(
 	ctx context.Context,
 	req *pb.DescribeCompanyV1Request,
 ) (*pb.DescribeCompanyV1Response, error) {
@@ -45,7 +45,7 @@ func (o *CompanyAPI) DescribecompanyV1(
 
 	company, err := o.repo.DescribeCompany(ctx, req.CompanyId)
 	if err != nil {
-		log.Error().Err(err).Msg("DescribecompanyV1 -- failed")
+		log.Error().Err(err).Msg("DescribeCompanyV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
