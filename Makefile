@@ -52,7 +52,7 @@ generate-go: .generate-install-buf .generate-go .generate-finalize-go
 	$(BUF_EXE) generate
 
 .generate-python:
-	$(BUF_EXE) generate --company buf.gen.python.yaml
+	$(BUF_EXE) generate --template buf.gen.python.yaml
 
 .generate-finalize-go:
 	mv pkg/$(SERVICE_NAME)/github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME)/* pkg/$(SERVICE_NAME)
