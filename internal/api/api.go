@@ -36,6 +36,7 @@ func (o *CompanyAPI) DescribeCompanyV1(
 	ctx context.Context,
 	req *pb.DescribeCompanyV1Request,
 ) (*pb.DescribeCompanyV1Response, error) {
+	log.Debug().Msg("DescribeCompanyV1")
 
 	if err := req.Validate(); err != nil {
 		log.Error().Err(err).Msg("DescribeCompanyV1 - invalid argument")
@@ -66,4 +67,31 @@ func (o *CompanyAPI) DescribeCompanyV1(
 			Address: company.Address,
 		},
 	}, nil
+}
+
+func (o *CompanyAPI) CreateCompanyV1(
+	ctx context.Context,
+	req *pb.CreateCompanyV1Request,
+) (*pb.CreateCompanyV1Response, error) {
+	log.Debug().Msg("CreateCompanyV1")
+
+	return nil, status.Error(codes.Internal, "not implemented")
+}
+
+func (o *CompanyAPI) ListCompanyV1(
+	ctx context.Context,
+	req *pb.ListCompanyV1Request,
+) (*pb.ListCompanyV1Response, error) {
+	log.Debug().Msg("ListCompanyV1")
+
+	return nil, status.Error(codes.Internal, "not implemented")
+}
+
+func (o *CompanyAPI) RemoveCompanyV1(
+	ctx context.Context,
+	req *pb.RemoveCompanyV1Request,
+) (*pb.RemoveCompanyV1Response, error) {
+	log.Debug().Msg("RemoveCompanyV1")
+
+	return nil, status.Error(codes.Internal, "not implemented")
 }
