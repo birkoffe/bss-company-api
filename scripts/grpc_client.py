@@ -10,7 +10,7 @@ async def main():
         client = BssCompanyApiServiceStub(channel)
 
         req = DescribeCompanyV1Request(company_id=1)
-        reply = await client.DescribecompanyV1(req)
+        reply = await client.DescribeCompanyV1(req)
         print(reply.message)
 
 
