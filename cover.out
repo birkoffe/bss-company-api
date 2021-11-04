@@ -1,0 +1,4 @@
+mode: atomic
+github.com/ozonmp/bss-company-api/internal/app/retranslator/retranslator.go:41.47,63.2 5 1
+github.com/ozonmp/bss-company-api/internal/app/retranslator/retranslator.go:65.32,68.2 2 1
+github.com/ozonmp/bss-company-api/internal/app/retranslator/retranslator.go:70.32,74.2 3 1
