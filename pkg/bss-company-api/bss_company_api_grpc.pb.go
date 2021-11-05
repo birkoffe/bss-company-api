@@ -7,6 +7,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,7 +24,7 @@ type BssCompanyApiServiceClient interface {
 	// DescribeCompanyV1 - Describe a company
 	DescribeCompanyV1(ctx context.Context, in *DescribeCompanyV1Request, opts ...grpc.CallOption) (*DescribeCompanyV1Response, error)
 	// ListCompanyV1 - List a company
-	ListCompanyV1(ctx context.Context, in *ListCompanyV1Request, opts ...grpc.CallOption) (*ListCompanyV1Response, error)
+	ListCompanyV1(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListCompanyV1Response, error)
 	// RemoveCompanyV1 - Remove a company
 	RemoveCompanyV1(ctx context.Context, in *RemoveCompanyV1Request, opts ...grpc.CallOption) (*RemoveCompanyV1Response, error)
 }
@@ -54,7 +55,7 @@ func (c *bssCompanyApiServiceClient) DescribeCompanyV1(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *bssCompanyApiServiceClient) ListCompanyV1(ctx context.Context, in *ListCompanyV1Request, opts ...grpc.CallOption) (*ListCompanyV1Response, error) {
+func (c *bssCompanyApiServiceClient) ListCompanyV1(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListCompanyV1Response, error) {
 	out := new(ListCompanyV1Response)
 	err := c.cc.Invoke(ctx, "/ozonmp.bss_company_api.v1.BssCompanyApiService/ListCompanyV1", in, out, opts...)
 	if err != nil {
@@ -81,7 +82,7 @@ type BssCompanyApiServiceServer interface {
 	// DescribeCompanyV1 - Describe a company
 	DescribeCompanyV1(context.Context, *DescribeCompanyV1Request) (*DescribeCompanyV1Response, error)
 	// ListCompanyV1 - List a company
-	ListCompanyV1(context.Context, *ListCompanyV1Request) (*ListCompanyV1Response, error)
+	ListCompanyV1(context.Context, *emptypb.Empty) (*ListCompanyV1Response, error)
 	// RemoveCompanyV1 - Remove a company
 	RemoveCompanyV1(context.Context, *RemoveCompanyV1Request) (*RemoveCompanyV1Response, error)
 	mustEmbedUnimplementedBssCompanyApiServiceServer()
@@ -97,7 +98,7 @@ func (UnimplementedBssCompanyApiServiceServer) CreateCompanyV1(context.Context, 
 func (UnimplementedBssCompanyApiServiceServer) DescribeCompanyV1(context.Context, *DescribeCompanyV1Request) (*DescribeCompanyV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeCompanyV1 not implemented")
 }
-func (UnimplementedBssCompanyApiServiceServer) ListCompanyV1(context.Context, *ListCompanyV1Request) (*ListCompanyV1Response, error) {
+func (UnimplementedBssCompanyApiServiceServer) ListCompanyV1(context.Context, *emptypb.Empty) (*ListCompanyV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCompanyV1 not implemented")
 }
 func (UnimplementedBssCompanyApiServiceServer) RemoveCompanyV1(context.Context, *RemoveCompanyV1Request) (*RemoveCompanyV1Response, error) {
@@ -153,7 +154,7 @@ func _BssCompanyApiService_DescribeCompanyV1_Handler(srv interface{}, ctx contex
 }
 
 func _BssCompanyApiService_ListCompanyV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCompanyV1Request)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -165,7 +166,7 @@ func _BssCompanyApiService_ListCompanyV1_Handler(srv interface{}, ctx context.Co
 		FullMethod: "/ozonmp.bss_company_api.v1.BssCompanyApiService/ListCompanyV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BssCompanyApiServiceServer).ListCompanyV1(ctx, req.(*ListCompanyV1Request))
+		return srv.(BssCompanyApiServiceServer).ListCompanyV1(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

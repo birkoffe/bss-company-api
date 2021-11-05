@@ -15,9 +15,10 @@ _sym_db = _symbol_database.Default()
 from validate import validate_pb2 as validate_dot_validate__pb2
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n/ozonmp/bss_company_api/v1/bss_company_api.proto\x12\x19ozonmp.bss_company_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"}\n\x07\x43ompany\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n\x07\x61\x64\x64ress\x18\x03 \x01(\tR\x07\x61\x64\x64ress\x12\x34\n\x07\x63reated\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07\x63reated\"p\n\x16\x43reateCompanyV1Request\x12*\n\x0c\x63ompany_name\x18\x01 \x01(\tB\x07\xfa\x42\x04r\x02\x10\x14R\x0b\x63ompanyName\x12*\n\x0c\x61\x64\x64ress_name\x18\x02 \x01(\tB\x07\xfa\x42\x04r\x02\x10\x64R\x0b\x61\x64\x64ressName\"W\n\x17\x43reateCompanyV1Response\x12<\n\x07\x63ompany\x18\x01 \x01(\x0b\x32\".ozonmp.bss_company_api.v1.CompanyR\x07\x63ompany\"B\n\x18\x44\x65scribeCompanyV1Request\x12&\n\ncompany_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\tcompanyId\"U\n\x19\x44\x65scribeCompanyV1Response\x12\x38\n\x05value\x18\x01 \x01(\x0b\x32\".ozonmp.bss_company_api.v1.CompanyR\x05value\"\x16\n\x14ListCompanyV1Request\"U\n\x15ListCompanyV1Response\x12<\n\x07\x63ompany\x18\x01 \x03(\x0b\x32\".ozonmp.bss_company_api.v1.CompanyR\x07\x63ompany\"@\n\x16RemoveCompanyV1Request\x12&\n\ncompany_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\tcompanyId\"1\n\x17RemoveCompanyV1Response\x12\x16\n\x06result\x18\x01 \x01(\x08R\x06result2\x90\x05\n\x14\x42ssCompanyApiService\x12\x95\x01\n\x0f\x43reateCompanyV1\x12\x31.ozonmp.bss_company_api.v1.CreateCompanyV1Request\x1a\x32.ozonmp.bss_company_api.v1.CreateCompanyV1Response\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/companys/create\x12\xaa\x01\n\x11\x44\x65scribeCompanyV1\x12\x33.ozonmp.bss_company_api.v1.DescribeCompanyV1Request\x1a\x34.ozonmp.bss_company_api.v1.DescribeCompanyV1Response\"*\x82\xd3\xe4\x93\x02$\x12\"/v1/companys/describe/{company_id}\x12\x8d\x01\n\rListCompanyV1\x12/.ozonmp.bss_company_api.v1.ListCompanyV1Request\x1a\x30.ozonmp.bss_company_api.v1.ListCompanyV1Response\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/companys/list\x12\xa2\x01\n\x0fRemoveCompanyV1\x12\x31.ozonmp.bss_company_api.v1.RemoveCompanyV1Request\x1a\x32.ozonmp.bss_company_api.v1.RemoveCompanyV1Response\"(\x82\xd3\xe4\x93\x02\"\x12 /v1/companys/remove/{company_id}BGZEgithub.com/ozonmp/bss-company-api/pkg/bss-company-api;bss_company_apib\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n/ozonmp/bss_company_api/v1/bss_company_api.proto\x12\x19ozonmp.bss_company_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\"}\n\x07\x43ompany\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n\x07\x61\x64\x64ress\x18\x03 \x01(\tR\x07\x61\x64\x64ress\x12\x34\n\x07\x63reated\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07\x63reated\"p\n\x16\x43reateCompanyV1Request\x12*\n\x0c\x63ompany_name\x18\x01 \x01(\tB\x07\xfa\x42\x04r\x02\x10\x14R\x0b\x63ompanyName\x12*\n\x0c\x61\x64\x64ress_name\x18\x02 \x01(\tB\x07\xfa\x42\x04r\x02\x10\x64R\x0b\x61\x64\x64ressName\"W\n\x17\x43reateCompanyV1Response\x12<\n\x07\x63ompany\x18\x01 \x01(\x0b\x32\".ozonmp.bss_company_api.v1.CompanyR\x07\x63ompany\"B\n\x18\x44\x65scribeCompanyV1Request\x12&\n\ncompany_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\tcompanyId\"U\n\x19\x44\x65scribeCompanyV1Response\x12\x38\n\x05value\x18\x01 \x01(\x0b\x32\".ozonmp.bss_company_api.v1.CompanyR\x05value\"U\n\x15ListCompanyV1Response\x12<\n\x07\x63ompany\x18\x01 \x03(\x0b\x32\".ozonmp.bss_company_api.v1.CompanyR\x07\x63ompany\"@\n\x16RemoveCompanyV1Request\x12&\n\ncompany_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\tcompanyId\"1\n\x17RemoveCompanyV1Response\x12\x16\n\x06result\x18\x01 \x01(\x08R\x06result2\xf6\x04\n\x14\x42ssCompanyApiService\x12\x95\x01\n\x0f\x43reateCompanyV1\x12\x31.ozonmp.bss_company_api.v1.CreateCompanyV1Request\x1a\x32.ozonmp.bss_company_api.v1.CreateCompanyV1Response\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/companys/create\x12\xaa\x01\n\x11\x44\x65scribeCompanyV1\x12\x33.ozonmp.bss_company_api.v1.DescribeCompanyV1Request\x1a\x34.ozonmp.bss_company_api.v1.DescribeCompanyV1Response\"*\x82\xd3\xe4\x93\x02$\x12\"/v1/companys/describe/{company_id}\x12t\n\rListCompanyV1\x12\x16.google.protobuf.Empty\x1a\x30.ozonmp.bss_company_api.v1.ListCompanyV1Response\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/companys/list\x12\xa2\x01\n\x0fRemoveCompanyV1\x12\x31.ozonmp.bss_company_api.v1.RemoveCompanyV1Request\x1a\x32.ozonmp.bss_company_api.v1.RemoveCompanyV1Response\"(\x82\xd3\xe4\x93\x02\"\x12 /v1/companys/remove/{company_id}BGZEgithub.com/ozonmp/bss-company-api/pkg/bss-company-api;bss_company_apib\x06proto3')
 
 
 
@@ -26,7 +27,6 @@ _CREATECOMPANYV1REQUEST = DESCRIPTOR.message_types_by_name['CreateCompanyV1Reque
 _CREATECOMPANYV1RESPONSE = DESCRIPTOR.message_types_by_name['CreateCompanyV1Response']
 _DESCRIBECOMPANYV1REQUEST = DESCRIPTOR.message_types_by_name['DescribeCompanyV1Request']
 _DESCRIBECOMPANYV1RESPONSE = DESCRIPTOR.message_types_by_name['DescribeCompanyV1Response']
-_LISTCOMPANYV1REQUEST = DESCRIPTOR.message_types_by_name['ListCompanyV1Request']
 _LISTCOMPANYV1RESPONSE = DESCRIPTOR.message_types_by_name['ListCompanyV1Response']
 _REMOVECOMPANYV1REQUEST = DESCRIPTOR.message_types_by_name['RemoveCompanyV1Request']
 _REMOVECOMPANYV1RESPONSE = DESCRIPTOR.message_types_by_name['RemoveCompanyV1Response']
@@ -64,13 +64,6 @@ DescribeCompanyV1Response = _reflection.GeneratedProtocolMessageType('DescribeCo
   # @@protoc_insertion_point(class_scope:ozonmp.bss_company_api.v1.DescribeCompanyV1Response)
   })
 _sym_db.RegisterMessage(DescribeCompanyV1Response)
-
-ListCompanyV1Request = _reflection.GeneratedProtocolMessageType('ListCompanyV1Request', (_message.Message,), {
-  'DESCRIPTOR' : _LISTCOMPANYV1REQUEST,
-  '__module__' : 'ozonmp.bss_company_api.v1.bss_company_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.bss_company_api.v1.ListCompanyV1Request)
-  })
-_sym_db.RegisterMessage(ListCompanyV1Request)
 
 ListCompanyV1Response = _reflection.GeneratedProtocolMessageType('ListCompanyV1Response', (_message.Message,), {
   'DESCRIPTOR' : _LISTCOMPANYV1RESPONSE,
@@ -114,24 +107,22 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _BSSCOMPANYAPISERVICE.methods_by_name['ListCompanyV1']._serialized_options = b'\202\323\344\223\002\023\022\021/v1/companys/list'
   _BSSCOMPANYAPISERVICE.methods_by_name['RemoveCompanyV1']._options = None
   _BSSCOMPANYAPISERVICE.methods_by_name['RemoveCompanyV1']._serialized_options = b'\202\323\344\223\002\"\022 /v1/companys/remove/{company_id}'
-  _COMPANY._serialized_start=166
-  _COMPANY._serialized_end=291
-  _CREATECOMPANYV1REQUEST._serialized_start=293
-  _CREATECOMPANYV1REQUEST._serialized_end=405
-  _CREATECOMPANYV1RESPONSE._serialized_start=407
-  _CREATECOMPANYV1RESPONSE._serialized_end=494
-  _DESCRIBECOMPANYV1REQUEST._serialized_start=496
-  _DESCRIBECOMPANYV1REQUEST._serialized_end=562
-  _DESCRIBECOMPANYV1RESPONSE._serialized_start=564
-  _DESCRIBECOMPANYV1RESPONSE._serialized_end=649
-  _LISTCOMPANYV1REQUEST._serialized_start=651
-  _LISTCOMPANYV1REQUEST._serialized_end=673
-  _LISTCOMPANYV1RESPONSE._serialized_start=675
-  _LISTCOMPANYV1RESPONSE._serialized_end=760
-  _REMOVECOMPANYV1REQUEST._serialized_start=762
-  _REMOVECOMPANYV1REQUEST._serialized_end=826
-  _REMOVECOMPANYV1RESPONSE._serialized_start=828
-  _REMOVECOMPANYV1RESPONSE._serialized_end=877
-  _BSSCOMPANYAPISERVICE._serialized_start=880
-  _BSSCOMPANYAPISERVICE._serialized_end=1536
+  _COMPANY._serialized_start=195
+  _COMPANY._serialized_end=320
+  _CREATECOMPANYV1REQUEST._serialized_start=322
+  _CREATECOMPANYV1REQUEST._serialized_end=434
+  _CREATECOMPANYV1RESPONSE._serialized_start=436
+  _CREATECOMPANYV1RESPONSE._serialized_end=523
+  _DESCRIBECOMPANYV1REQUEST._serialized_start=525
+  _DESCRIBECOMPANYV1REQUEST._serialized_end=591
+  _DESCRIBECOMPANYV1RESPONSE._serialized_start=593
+  _DESCRIBECOMPANYV1RESPONSE._serialized_end=678
+  _LISTCOMPANYV1RESPONSE._serialized_start=680
+  _LISTCOMPANYV1RESPONSE._serialized_end=765
+  _REMOVECOMPANYV1REQUEST._serialized_start=767
+  _REMOVECOMPANYV1REQUEST._serialized_end=831
+  _REMOVECOMPANYV1RESPONSE._serialized_start=833
+  _REMOVECOMPANYV1RESPONSE._serialized_end=882
+  _BSSCOMPANYAPISERVICE._serialized_start=885
+  _BSSCOMPANYAPISERVICE._serialized_end=1515
 # @@protoc_insertion_point(module_scope)

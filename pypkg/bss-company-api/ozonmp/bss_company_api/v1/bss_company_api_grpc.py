@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
 import validate.validate_pb2
 import google.api.annotations_pb2
 import google.protobuf.timestamp_pb2
+import google.protobuf.empty_pb2
 import ozonmp.bss_company_api.v1.bss_company_api_pb2
 
 
@@ -26,7 +27,7 @@ class BssCompanyApiServiceBase(abc.ABC):
         pass
 
     @abc.abstractmethod
-    async def ListCompanyV1(self, stream: 'grpclib.server.Stream[ozonmp.bss_company_api.v1.bss_company_api_pb2.ListCompanyV1Request, ozonmp.bss_company_api.v1.bss_company_api_pb2.ListCompanyV1Response]') -> None:
+    async def ListCompanyV1(self, stream: 'grpclib.server.Stream[google.protobuf.empty_pb2.Empty, ozonmp.bss_company_api.v1.bss_company_api_pb2.ListCompanyV1Response]') -> None:
         pass
 
     @abc.abstractmethod
@@ -50,7 +51,7 @@ class BssCompanyApiServiceBase(abc.ABC):
             '/ozonmp.bss_company_api.v1.BssCompanyApiService/ListCompanyV1': grpclib.const.Handler(
                 self.ListCompanyV1,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                ozonmp.bss_company_api.v1.bss_company_api_pb2.ListCompanyV1Request,
+                google.protobuf.empty_pb2.Empty,
                 ozonmp.bss_company_api.v1.bss_company_api_pb2.ListCompanyV1Response,
             ),
             '/ozonmp.bss_company_api.v1.BssCompanyApiService/RemoveCompanyV1': grpclib.const.Handler(
@@ -80,7 +81,7 @@ class BssCompanyApiServiceStub:
         self.ListCompanyV1 = grpclib.client.UnaryUnaryMethod(
             channel,
             '/ozonmp.bss_company_api.v1.BssCompanyApiService/ListCompanyV1',
-            ozonmp.bss_company_api.v1.bss_company_api_pb2.ListCompanyV1Request,
+            google.protobuf.empty_pb2.Empty,
             ozonmp.bss_company_api.v1.bss_company_api_pb2.ListCompanyV1Response,
         )
         self.RemoveCompanyV1 = grpclib.client.UnaryUnaryMethod(

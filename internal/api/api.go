@@ -9,6 +9,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 
 	"github.com/ozonmp/bss-company-api/internal/repo"
 
@@ -80,7 +81,7 @@ func (o *CompanyAPI) CreateCompanyV1(
 
 func (o *CompanyAPI) ListCompanyV1(
 	ctx context.Context,
-	req *pb.ListCompanyV1Request,
+	req *emptypb.Empty,
 ) (*pb.ListCompanyV1Response, error) {
 	log.Debug().Msg("ListCompanyV1")
 

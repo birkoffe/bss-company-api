@@ -21,6 +21,7 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 // Suppress "imported and not used" errors
@@ -120,7 +121,7 @@ func local_request_BssCompanyApiService_DescribeCompanyV1_0(ctx context.Context,
 }
 
 func request_BssCompanyApiService_ListCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, client BssCompanyApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListCompanyV1Request
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.ListCompanyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -129,7 +130,7 @@ func request_BssCompanyApiService_ListCompanyV1_0(ctx context.Context, marshaler
 }
 
 func local_request_BssCompanyApiService_ListCompanyV1_0(ctx context.Context, marshaler runtime.Marshaler, server BssCompanyApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListCompanyV1Request
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := server.ListCompanyV1(ctx, &protoReq)
