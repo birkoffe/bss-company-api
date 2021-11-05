@@ -54,7 +54,7 @@ func TestDescribeNoCompany(t *testing.T) {
 		},
 	)
 
-	err_ex := "rpc error: code = Internal desc = Invalid index 2, max elements of companies - 1."
+	err_ex := "rpc error: code = Internal desc = No company with idx: 2"
 	err_desc := err.Error()
 	assert.Equal(t, err_ex, err_desc, "")
 }

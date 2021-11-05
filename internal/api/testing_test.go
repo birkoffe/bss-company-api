@@ -10,13 +10,8 @@ import (
 
 type testRepo struct{}
 
-var Companies = []model.Company{
-	{
-		ID:      0,
-		Name:    "Company_0",
-		Address: "Unknown_0",
-	},
-	{
+var companies = map[uint64]model.Company{
+	1: {
 		ID:      1,
 		Name:    "Company_1",
 		Address: "Unknown_1",
@@ -28,9 +23,10 @@ func newTestRepo() repo.Repo {
 }
 
 func (r *testRepo) DescribeCompany(ctx context.Context, companyId uint64) (*model.Company, error) {
-	if companyId < 0 || int(companyId) >= len(Companies) {
-		return nil, fmt.Errorf("Invalid index %d, max elements of companies - %d.", companyId, len(Companies)-1)
+	company, ok := companies[companyId]
+	if !ok {
+		return nil, fmt.Errorf("No company with idx: %d", companyId)
 	}
 
-	return &Companies[companyId], nil
+	return &company, nil
 }
