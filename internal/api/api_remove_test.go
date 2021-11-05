@@ -20,7 +20,7 @@ func TestRemove(t *testing.T) {
 		},
 	)
 
-	err_ex := "rpc error: code = Internal desc = not implemented"
-	err_desc := err.Error()
-	assert.Equal(t, err_ex, err_desc, "")
+	errEx := "rpc error: code = Internal desc = not implemented"
+	errDesc := err.Error()
+	assert.Equal(t, errEx, errDesc, "")
 }

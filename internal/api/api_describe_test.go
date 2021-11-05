@@ -20,8 +20,8 @@ func TestDescribeValid(t *testing.T) {
 		},
 	)
 
-	response_id := response.GetValue().GetId()
-	assert.Equal(t, uint64(1), response_id, "Not excepted response")
+	responseId := response.GetValue().GetId()
+	assert.Equal(t, uint64(1), responseId, "Not excepted response")
 	assert.Equal(t, nil, err, "Err must be nil")
 }
 
@@ -37,9 +37,9 @@ func TestDescribeLessOne(t *testing.T) {
 		},
 	)
 
-	err_ex := "rpc error: code = InvalidArgument desc = invalid DescribeCompanyV1Request.CompanyId: value must be greater than 0"
-	err_desc := err.Error()
-	assert.Equal(t, err_ex, err_desc, "")
+	errEx := "rpc error: code = InvalidArgument desc = invalid DescribeCompanyV1Request.CompanyId: value must be greater than 0"
+	errDesc := err.Error()
+	assert.Equal(t, errEx, errDesc, "")
 }
 
 func TestDescribeNoCompany(t *testing.T) {
@@ -54,7 +54,7 @@ func TestDescribeNoCompany(t *testing.T) {
 		},
 	)
 
-	err_ex := "rpc error: code = Internal desc = No company with idx: 2"
-	err_desc := err.Error()
-	assert.Equal(t, err_ex, err_desc, "")
+	errEx := "rpc error: code = Internal desc = No company with idx: 2"
+	errDesc := err.Error()
+	assert.Equal(t, errEx, errDesc, "")
 }
