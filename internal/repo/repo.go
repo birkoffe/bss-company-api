@@ -12,6 +12,7 @@ import (
 // Repo is DAO for company
 type Repo interface {
 	DescribeCompany(ctx context.Context, companyID uint64) (*model.Company, error)
+	RemoveCompany(ctx context.Context, companyID uint64) (bool, error)
 }
 
 type repo struct {
@@ -46,4 +47,21 @@ func (r *repo) DescribeCompany(ctx context.Context, companyID uint64) (*model.Co
 	}
 
 	return &company[0], err
+}
+
+func (r *repo) RemoveCompany(ctx context.Context, companyID uint64) (bool, error) {
+	query := sq.Update("company").Set("removed", true).Set("updated", "now()").
+		Where(sq.Eq{"id": companyID}).PlaceholderFormat(sq.Dollar)
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return false, err
+	}
+
+	_, err = r.db.QueryContext(ctx, s, args...)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }

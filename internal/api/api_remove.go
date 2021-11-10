@@ -16,5 +16,22 @@ func (o *CompanyAPI) RemoveCompanyV1(
 ) (*pb.RemoveCompanyV1Response, error) {
 	log.Debug().Msg("RemoveCompanyV1")
 
-	return nil, status.Error(codes.Internal, "not implemented")
+	if err := req.Validate(); err != nil {
+		log.Error().Err(err).Msg("RemoveCompanyV1 - invalid argument")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	result, err := o.repo.RemoveCompany(ctx, req.CompanyId)
+	if err != nil {
+		log.Error().Err(err).Msg("RemoveCompanyV1 -- failed")
+
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	log.Debug().Msg("RemoveCompanyV1 - success")
+
+	return &pb.RemoveCompanyV1Response{
+		Result: result,
+	}, nil
 }
