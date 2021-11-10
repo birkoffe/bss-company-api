@@ -3,6 +3,7 @@ package repo
 import (
 	"context"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/ozonmp/bss-company-api/internal/model"
@@ -24,5 +25,25 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 }
 
 func (r *repo) DescribeCompany(ctx context.Context, companyID uint64) (*model.Company, error) {
-	return nil, nil
+	query := sq.Select("id, name, address, removed, created, updated").
+		PlaceholderFormat(sq.Dollar).
+		From("company").
+		Where(sq.Eq{"id": companyID})
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var company []model.Company
+	err = r.db.SelectContext(ctx, &company, s, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(company) == 0 {
+		return nil, nil
+	}
+
+	return &company[0], err
 }

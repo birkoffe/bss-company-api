@@ -1,9 +1,14 @@
 package model
 
+import "time"
+
 type Company struct {
 	ID      uint64
 	Name    string
 	Address string
+	Removed bool
+	Created time.Time
+	Updated time.Time
 }
 
 type EventType uint8
