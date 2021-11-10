@@ -14,6 +14,7 @@ type Repo interface {
 	DescribeCompany(ctx context.Context, companyID uint64) (*model.Company, error)
 	RemoveCompany(ctx context.Context, companyID uint64) (bool, error)
 	ListCompany(ctx context.Context, offset uint64, count uint64) ([]model.Company, error)
+	AddCompany(ctx context.Context, company *model.Company) (*model.Company, error)
 }
 
 type repo struct {
@@ -87,4 +88,8 @@ func (r *repo) ListCompany(ctx context.Context, offset uint64, count uint64) ([]
 	}
 
 	return companies, err
+}
+
+func (r *repo) AddCompany(ctx context.Context, company *model.Company) (*model.Company, error) {
+	return nil, nil
 }
