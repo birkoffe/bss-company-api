@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"database/sql"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
@@ -14,7 +15,7 @@ type Repo interface {
 	DescribeCompany(ctx context.Context, companyID uint64) (*model.Company, error)
 	RemoveCompany(ctx context.Context, companyID uint64) (bool, error)
 	ListCompany(ctx context.Context, offset uint64, count uint64) ([]model.Company, error)
-	AddCompany(ctx context.Context, company *model.Company) (*model.Company, error)
+	AddCompany(ctx context.Context, company *model.Company) (uint64, error)
 }
 
 type repo struct {
@@ -90,6 +91,30 @@ func (r *repo) ListCompany(ctx context.Context, offset uint64, count uint64) ([]
 	return companies, err
 }
 
-func (r *repo) AddCompany(ctx context.Context, company *model.Company) (*model.Company, error) {
-	return nil, nil
+func (r *repo) AddCompany(ctx context.Context, company *model.Company) (uint64, error) {
+	query := sq.Insert("company").PlaceholderFormat(sq.Dollar).
+		Columns("name", "address").Values(company.Name, company.Address).
+		Suffix("Returning id")
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return 0, err
+	}
+
+	rows, err := r.db.QueryContext(ctx, s, args...)
+	if err != nil {
+		return 0, err
+	}
+
+	var company_id uint64
+	if rows.Next() {
+		err = rows.Scan()
+		if err != nil {
+			return 0, err
+		}
+
+		return company_id, nil
+	}
+
+	return 0, sql.ErrNoRows
 }
