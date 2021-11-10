@@ -13,6 +13,7 @@ import (
 type Repo interface {
 	DescribeCompany(ctx context.Context, companyID uint64) (*model.Company, error)
 	RemoveCompany(ctx context.Context, companyID uint64) (bool, error)
+	ListCompany(ctx context.Context, offset uint64, count uint64) ([]model.Company, error)
 }
 
 type repo struct {
@@ -64,4 +65,26 @@ func (r *repo) RemoveCompany(ctx context.Context, companyID uint64) (bool, error
 	}
 
 	return true, nil
+}
+
+func (r *repo) ListCompany(ctx context.Context, offset uint64, count uint64) ([]model.Company, error) {
+	query := sq.Select("id, name, address").From("company").Where(sq.Eq{"removed": false}).Limit(count).
+		PlaceholderFormat(sq.Dollar)
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var companies []model.Company
+	err = r.db.SelectContext(ctx, &companies, s, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(companies) == 0 {
+		return nil, nil
+	}
+
+	return companies, err
 }
