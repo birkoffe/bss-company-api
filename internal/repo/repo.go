@@ -28,7 +28,7 @@ func (r *repo) DescribeCompany(ctx context.Context, companyID uint64) (*model.Co
 	query := sq.Select("id, name, address, removed, created, updated").
 		PlaceholderFormat(sq.Dollar).
 		From("company").
-		Where(sq.Eq{"id": companyID})
+		Where(sq.And{sq.Eq{"id": companyID}, sq.Eq{"removed": false}})
 
 	s, args, err := query.ToSql()
 	if err != nil {
