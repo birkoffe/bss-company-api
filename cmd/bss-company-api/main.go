@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/ozonmp/bss-cbssany-api/internal/app/retranslator"
+	"github.com/ozonmp/bss-company-api/internal/app/retranslator"
 )
 
 func main() {

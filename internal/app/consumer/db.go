@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ozonmp/bss-cbssany-api/internal/app/repo"
-	"github.com/ozonmp/bss-cbssany-api/internal/model"
+	"github.com/ozonmp/bss-company-api/internal/app/repo"
+	"github.com/ozonmp/bss-company-api/internal/model"
 )
 
 type Consumer interface {

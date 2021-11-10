@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: grpc-bss-company-api
+Version: 1.0.0
+Summary: GRPC python client for bss-company-api
+Home-page: https://github.com/ozonmp/bss-company-api
+Author: rusdevop
+Author-email: rusdevops@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.5
+
+UNKNOWN
+

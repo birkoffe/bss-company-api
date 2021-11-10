@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
-	"github.com/ozonmp/bss-cbssany-api/internal/mocks"
+	"github.com/ozonmp/bss-company-api/internal/mocks"
 )
 
 func TestStart(t *testing.T) {

@@ -9,8 +9,8 @@ async def main():
     async with Channel('127.0.0.1', 8082) as channel:
         client = BssCompanyApiServiceStub(channel)
 
-        req = DescribecompanyV1Request(company_id=1)
-        reply = await client.DescribecompanyV1(req)
+        req = DescribeCompanyV1Request(company_id=1)
+        reply = await client.DescribeCompanyV1(req)
         print(reply.message)
 
 
