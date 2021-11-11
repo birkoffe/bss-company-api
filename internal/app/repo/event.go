@@ -48,7 +48,41 @@ func (r *repo) Remove(eventIDs []uint64) error {
 }
 
 func (r *repo) Lock(n uint64) ([]model.CompanyEvent, error) {
-	//
+	ctx := context.Background()
+
+	query := sq.Select("id, company_id, type, status, payload, updated").From("company_events").
+		PlaceholderFormat(sq.Dollar).Where(sq.Eq{"status": model.Deferred}).Limit(n)
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var events []model.CompanyEvent
+	err = r.db.SelectContext(ctx, &events, s, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	eventIDs := make([]uint64, 0, len())
+	for _, v := range events {
+		eventIDs = append(eventIDs, v.ID)
+	}
+
+	upadateQuery := sq.Update("company_events").PlaceholderFormat(sq.Dollar).
+		Set("status", model.Processed).Where(sq.Eq{"id": eventIDs})
+
+	s, args, err = upadateQuery.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = r.db.ExecContext(ctx, s, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return events, nil
 }
 
 func (r *repo) Unlock(eventIDs []uint64) error {
