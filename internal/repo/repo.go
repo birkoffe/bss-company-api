@@ -108,7 +108,7 @@ func (r *repo) AddCompany(ctx context.Context, company *model.Company) (uint64, 
 
 	var company_id uint64
 	if rows.Next() {
-		err = rows.Scan()
+		err = rows.Scan(&company_id)
 		if err != nil {
 			return 0, err
 		}

@@ -36,7 +36,7 @@ func (o *CompanyAPI) CreateCompanyV1(
 
 	company, err := o.repo.DescribeCompany(ctx, company_id)
 	if err != nil {
-		log.Error().Err(err).Msg("CreateCompanyV1 -- failed")
+		log.Error().Err(err).Msg("CreateCompanyV1/DescribeComapany -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
