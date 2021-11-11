@@ -121,17 +121,17 @@ func (m *CreateCompanyV1Request) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetCompanyName()) < 20 {
+	if utf8.RuneCountInString(m.GetCompanyName()) > 20 {
 		return CreateCompanyV1RequestValidationError{
 			field:  "CompanyName",
-			reason: "value length must be at least 20 runes",
+			reason: "value length must be at most 20 runes",
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetAddressName()) < 100 {
+	if utf8.RuneCountInString(m.GetAddressName()) > 100 {
 		return CreateCompanyV1RequestValidationError{
 			field:  "AddressName",
-			reason: "value length must be at least 100 runes",
+			reason: "value length must be at most 100 runes",
 		}
 	}
 

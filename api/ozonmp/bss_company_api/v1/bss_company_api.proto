@@ -48,8 +48,8 @@ message Company {
 }
 
 message CreateCompanyV1Request {
-  string company_name = 1 [(validate.rules).string.min_len = 20];
-  string address_name = 2 [(validate.rules).string.min_len = 100]; 
+  string company_name = 1 [(validate.rules).string.max_len = 20];
+  string address_name = 2 [(validate.rules).string.max_len = 100]; 
 }
 
 message CreateCompanyV1Response {
