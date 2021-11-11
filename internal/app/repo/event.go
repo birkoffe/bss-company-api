@@ -46,3 +46,22 @@ func (r *repo) Remove(eventIDs []uint64) error {
 
 	return nil
 }
+
+func (r *repo) Unlock(eventIDs []uint64) error {
+	ctx := context.Background()
+
+	query := sq.Update("company_events").PlaceholderFormat(sq.Dollar).
+		Set("status", model.Deferred).Where(sq.Eq{"id": eventIDs})
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return nil
+	}
+
+	_, err = r.db.ExecContext(ctx, s, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
