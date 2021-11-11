@@ -25,7 +25,7 @@ func NewRepo(db *sqlx.DB) repo {
 	return &repo{db: db}
 }
 
-func (r *repo) Add(event []model.Company) error {
+func (r *repo) Add(event []model.CompanyEvent) error {
 	return nil
 }
 
@@ -45,6 +45,10 @@ func (r *repo) Remove(eventIDs []uint64) error {
 	}
 
 	return nil
+}
+
+func (r *repo) Lock(n uint64) ([]model.CompanyEvent, error) {
+	//
 }
 
 func (r *repo) Unlock(eventIDs []uint64) error {
