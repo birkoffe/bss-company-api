@@ -17,7 +17,7 @@ $ make build # Build project
 ### For local development
 
 ```zsh
-$ docker-cbssose up -d
+$ docker-compose up -d
 ```
 
 ---
@@ -90,7 +90,7 @@ Prometheus is an open-source systems monitoring and alerting toolkit
 
 ### Kafka
 
-Apache Kafka is an open-source distributed event streaming platform used by thousands of cbssanies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
+Apache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
 
 - http://localhost:9094
 
@@ -102,7 +102,7 @@ UI for Apache Kafka is a simple tool that makes your data flows observable, help
 
 ### Jaeger UI
 
-Monitor and troubleshoot transactions in cbsslex distributed systems.
+Monitor and troubleshoot transactions in complex distributed systems.
 
 - http://localhost:16686
 
@@ -132,7 +132,7 @@ $ make generate
 $ cd pypkg/bss-company-api
 $ python setup.py install
 $ cd ../..
-$ docker-cbssose up -d
+$ docker-compose up -d
 $ python scripts/grpc_client.py
 ```
 
